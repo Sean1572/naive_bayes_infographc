@@ -21,7 +21,26 @@
   </div>
 
   <div class="foreground" slot="foreground">
-    <section>test</section>
+    <section>
+      <h1>Introduction</h1>
+      Introduce idea and dataset, do some eda to help user understand, introduce data transformation
+    </section>
+    <section>
+      <h1>intutiton</h1>
+      <p>
+        Show the distrbutions of a given column
+      </p>
+      <h1>MLE</h1>
+      <p>
+        Why we need it to MLE 
+      </p>
+    </section>
+
+    <section>Formula Baseline</section>
+    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
+    <section>Variants</section>
+    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
+    <section>Refrences</section>
 
   </div>
 </Scroller>
