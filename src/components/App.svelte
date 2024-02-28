@@ -38,7 +38,7 @@
 
     <section>Formula Baseline</section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
-    <section>Variants</section>
+    <section>Variants _ Visualization</section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
     <section>Refrences</section>
 
