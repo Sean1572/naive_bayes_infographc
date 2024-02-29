@@ -1,5 +1,7 @@
 <script>
   import Scroller from "@sveltejs/svelte-scroller";
+  import Tidif_hist from "./Tidif_hist.svelte";
+
   let count, index, offset, progress;
 
 </script>
@@ -8,14 +10,14 @@
   <h1>Svelte template</h1>
 
   <Scroller
-  top={0.0}
-  bottom={1}
-  threshold={0.5}
-  bind:count
-  bind:index
-  bind:offset
-  bind:progress
->
+    top={0.0}
+    bottom={1}
+    threshold={0.5}
+    bind:count
+    bind:index
+    bind:offset
+    bind:progress
+  >
   <div class="background" slot="background">
 
   </div>
@@ -24,6 +26,8 @@
     <section>
       <h1>Introduction</h1>
       Introduce idea and dataset, do some eda to help user understand, introduce data transformation
+
+      <Tidif_hist/>
     </section>
     <section>
       <h1>intutiton</h1>
