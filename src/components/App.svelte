@@ -4,6 +4,7 @@
 
   let count, index, offset, progress;
 
+  let word = "call"
 </script>
 
 <main>
@@ -27,7 +28,7 @@
       <h1>Introduction</h1>
       Introduce idea and dataset, do some eda to help user understand, introduce data transformation
 
-      <Tidif_hist/>
+      <Tidif_hist bind:word={word}/>
     </section>
     <section>
       <h1>intutiton</h1>
