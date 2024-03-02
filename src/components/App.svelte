@@ -1,6 +1,7 @@
 <script>
   import Scroller from "@sveltejs/svelte-scroller";
   import Tidif_hist from "./Tidif_hist.svelte";
+  import BayesViz from './BayesViz.svelte';
 
   let count, index, offset, progress;
 
@@ -41,7 +42,12 @@
       </p>
     </section>
 
-    <section>Formula Baseline</section>
+    <section>
+      <h1>Formula Baseline</h1>
+      <BayesViz />
+    </section>
+
+
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
     <section>Variants _ Visualization</section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
