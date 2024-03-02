@@ -39,9 +39,11 @@
 
 
     <div class="content">
+      <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
       {#if index < 2}
         <h1>Introduction</h1>
         One of the famous classical examples of machine learning is naive bayes, today we will explain how it works
+        
       {/if}
       {#if (index >= 2) && (index < 4)}
         Consider emails
