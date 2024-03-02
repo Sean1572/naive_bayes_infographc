@@ -1,6 +1,8 @@
 <script>
   import Scroller from "@sveltejs/svelte-scroller";
   import Tidif_hist from "./Tidif_hist.svelte";
+  import EmailCloud from "./EmailCloud.svelte";
+    import Email from "./Email.svelte";
 
   let count, index, offset, progress;
   let width, height;
@@ -8,8 +10,6 @@
 </script>
 
 <main>
-  <h1>Svelte template</h1>
-
   <Scroller
     top={0.0}
     bottom={1}
@@ -40,12 +40,20 @@
 
     <div class="content">
       <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
+      
+      <!-- Putting this here temporarly while I fix it up! -->
+      
+      
+      <EmailCloud frame={index}/>
+      
       {#if index < 2}
+        
         <h1>Introduction</h1>
         One of the famous classical examples of machine learning is naive bayes, today we will explain how it works
         
       {/if}
       {#if (index >= 2) && (index < 4)}
+        
         Consider emails
       {/if}
       {#if (index >= 4) && (index < 5)}
