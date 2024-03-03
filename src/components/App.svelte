@@ -3,7 +3,7 @@
   import Tidif_hist from "./Tidif_hist.svelte";
   import EmailCloud from "./EmailCloud.svelte";
   import Email from "./Email.svelte";
-  import BayesViz from './BayesViz.svelte';
+  //import BayesViz from './BayesViz.svelte';
 
   let count, index, offset, progress;
   let width, height;
