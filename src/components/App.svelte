@@ -2,7 +2,8 @@
   import Scroller from "@sveltejs/svelte-scroller";
   import Tidif_hist from "./Tidif_hist.svelte";
   import EmailCloud from "./EmailCloud.svelte";
-    import Email from "./Email.svelte";
+  import Email from "./Email.svelte";
+  import BayesViz from './BayesViz.svelte';
 
   let count, index, offset, progress;
   let width, height;
@@ -25,6 +26,7 @@
 </script>
 
 <main>
+  <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
   <Scroller
     top={0.0}
     bottom={1}
@@ -156,9 +158,14 @@
       
     </section>
 
+
     <section />
 
-    <section>Formula Baseline</section>
+
+    <section>
+      <h1>Formula Baseline</h1>
+    </section>
+
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
     <section>Variants _ Visualization</section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
