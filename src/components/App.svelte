@@ -7,6 +7,21 @@
   let count, index, offset, progress;
   let width, height;
   let word = "call"
+  let uncommon_vis = false;
+  let common_vis = false;
+  //Handle un/common words
+  function update_words() {
+    
+    uncommon_vis = ((index > 5) && (index < 8));
+    common_vis = ((index >= 8) && (index < 10));
+    
+  }
+  $: index, update_words();
+
+  $: index, console.log(index);
+
+
+
 </script>
 
 <main>
@@ -45,33 +60,75 @@
       
       
       <EmailCloud frame={index}/>
+
+
+      {#if (index > 5) && (index < 8)}
+            <h2  class="email_examples" style="position: absolute; top: 10%;">
+              some messages contain words unique to a few number of messages
+            </h2>
+          {/if}
+          {#if (index >= 8) && (index < 10)}
+            <h2  class="email_examples" style="position: absolute; top: 10%;">
+              Some of the words are commonly found in all messages
+            </h2>
+          {/if}
+          {#if (index >= 10) && (index < 12)}
+            <h2  class="email_examples" style="position: absolute; top: 10%;">
+              TIDIF can measure how "unique" a word in a given message is compared to an entire document
+            </h2>
+          {/if}
+
+          {#if (index >= 12) && (index < 13)}
+            <h2  class="email_examples" style="position: absolute; top: 40%;">
+              What happens if we plot a histogram of tidif values on a histogram?
+            </h2>
+          {/if}
+
+          {#if (index >= 14) && (index < 15)}
+            <h2  class="email_examples" style="position: absolute; top: 40%;">
+              You can see that spam emails have diffrent tidif values than ham words.
+
+              This means the probablity of emails is diffrent if you know what the tidif values it's words have
+
+              How can we use this in the context of classification?
+            </h2>
+          {/if}
+      {#if (index > 5) && (index < 12)}
+        <div>
+            <p 
+              class="email_examples"
+              style="top: 19%;"
+            >
+              <span class="uncommon_words" class:visible={uncommon_vis}>"URGENT!</span> <span class="common_words" class:visible={common_vis}>You</span> have won a 1 week FREE membership in our �100,000 Prize Jackpot! Txt the word:  <span class="uncommon_words" class:visible={uncommon_vis}>CLAIM</span> to No: 81010 T&C www.dbuk.net LCCLTD POBOX 4403LDNW1A7RW18"
+            </p>
+            <p 
+              class="email_examples"
+              style="top: 31%;"
+            >
+              "<span class="uncommon_words" class:visible={uncommon_vis}>Urgent</span> UR awarded a complimentary trip to EuroDisinc Trav, Aco&Entry41 Or �1000. To <span class="uncommon_words" class:visible={uncommon_vis}>claim</span> txt DIS to 87121 18+6*�1.50(moreFrmMob. ShrAcomOrSglSuplt)10, LS1 3AJ"
+            </p>
+            <p 
+              class="email_examples"
+              style="top: 42%;"
+            >
+            I've been searching for the right words to thank <span class="common_words" class:visible={common_vis}>you</span> for this breather. I promise i wont take your help for granted and will fulfil my promise. <span class="common_words" class:visible={common_vis}>You</span> have been wonderful and a blessing at all times
+            </p>
+            <p 
+              class="email_examples"
+              style="top: 53%;"
+            >
+            "Oops, I'll let <span class="common_words" class:visible={common_vis}>you</span> know when my roommate's done"
+            </p>
+            <p 
+              class="email_examples"
+              style="top: 64%;"
+            >
+            "Yeah hopefully, if tyler can't do it I could maybe ask around a bit"
+            </p>
+        </div>
+      {/if}
       
-      {#if index < 2}
-        
-        <h1>Introduction</h1>
-        One of the famous classical examples of machine learning is naive bayes, today we will explain how it works
-        
-      {/if}
-      {#if (index >= 2) && (index < 4)}
-        
-        Consider emails
-      {/if}
-      {#if (index >= 4) && (index < 5)}
-        <div>
-        <p>Some of it is "ham" or normal emails</p>
-        {#if (index >= 5) && (index < 5)}
-          Hello! How's you and how did saturday go? I was just texting to see if you'd decided to do anything tomo. Not that i'm trying to invite myself or anything!
-        {/if}
-        </div>
-      {/if}
-      {#if (index >= 5) && (index < 7)}
-        <div>
-        <p>Of course plently of it is annoying spam</p>
-        {#if (index >= 7) && (index < 7)}
-        "URGENT! You have won a 1 week FREE membership in our �100,000 Prize Jackpot! Txt the word: CLAIM to No: 81010 T&C www.dbuk.net LCCLTD POBOX 4403LDNW1A7RW18"
-        {/if}
-        </div>
-      {/if}
+      
     </div>
 
   </div>
@@ -90,22 +147,16 @@
     <section />
     <section />
     <section />
-    <section />
-    <section />
+
       
     <section>
       Consider emails
       
-      <Tidif_hist bind:word={word}/>
-      <h1>intutiton</h1>
-      <p>
-        Show the distrbutions of a given column
-      </p>
-      <h1>MLE</h1>
-      <p>
-        Why we need it to MLE 
-      </p>
+      <Tidif_hist bind:word={word} class="intro_tidif"/>
+      
     </section>
+
+    <section />
 
     <section>Formula Baseline</section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
@@ -166,6 +217,33 @@
     top: 0;
     bottom: 0;
     text-align: center;
+  }
+
+  .email_examples{
+    position: absolute;
+    margin-left: 31%;
+    margin-right: 25%;
+    width: 43%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .common_words{
+    color:black;
+  }
+
+  .common_words.visible{
+    color: blue;
+    font-weight: bold;
+  }
+
+  .uncommon_words{
+    color:black;
+  }
+
+  .uncommon_words.visible{
+    color: orange;
+    font-weight: bold;
   }
 </style>
 

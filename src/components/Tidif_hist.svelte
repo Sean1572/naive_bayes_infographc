@@ -54,11 +54,11 @@
     );
 
   function update_bars(bins, id, fill_color) { 
-      d3.select("svg").select(id).selectAll("rect")
+      console.log("entered!", d3.select("svg"))
+      d3.select("svelte-scroller-foreground").select("svg").select(id).selectAll("rect")
         .data(bins)
         .join(
           function(enter) {
-            console.log("entered!");
             return enter
             .append("rect")
               .attr("x", function(d) {return x(d.x0) + marginLeft;})
@@ -90,7 +90,7 @@
       return;
     }
 
-    console.log(allData)
+
     let ham_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "ham") })
     let spam_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "spam") })
     histogram = d3.histogram()
@@ -101,7 +101,7 @@
     bins_spam = histogram(spam_data);
     bins_ham = histogram(ham_data);
 
-    console.log(bins_spam)
+
     update_bars(bins_spam, "#spam", "orange")
     update_bars(bins_ham, "#ham","blue")
       
