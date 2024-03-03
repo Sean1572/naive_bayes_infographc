@@ -1,52 +1,90 @@
 <script>
-    import { onMount } from 'svelte';
-    import * as d3 from 'd3';
-  
-    let priorProbability = 0.5;
-    let likelihood = 0.5;
-    let marginalLikelihood = 0.5;
-    let posteriorProbability = (priorProbability * likelihood) / marginalLikelihood;
-  
-    const calculatePosterior = () => {
-      posteriorProbability = (priorProbability * likelihood) / marginalLikelihood;
-    };
-  
-    onMount(() => {
-      // Initialization or any D3 specific drawing logic can go here
+  import { onMount } from 'svelte';
+  let Tabulator;
+
+
+  let priorProb = 0.5;
+  let likelihood = 0.7;
+  let marginalProb = 0.8;
+  let table;
+
+  $: posteriorProb = (priorProb * likelihood) / marginalProb;
+
+  function updateTableData() {
+    const tableData = [
+      { x: 0, y0: '0%', y1: '0%' },
+      { x: 1, y0: '5%', y1: '0%' },
+      { x: 2, y0: '10%', y1: '5%' },
+      { x: 3, y0: '15%', y1: '15%' },
+      { x: 4, y0: '5%', y1: '20%' },
+      { x: 5, y0: '0%', y1: '15%' },
+      { x: 6, y0: '0%', y1: '10%' },
+    ];
+    if (table) {
+      table.setData(tableData);
+    }
+  }
+
+  onMount( async () => {
+    const module = await import('tabulator-tables');
+    Tabulator = module.default;
+
+
+    table = new Tabulator("#visualization", {
+      height: "311px",
+      data: [],
+      columns: [
+        { title: "X", field: "x", hozAlign: "center", width: 200 },
+        { title: "Y = 0", field: "y0", hozAlign: "center", width: 200 },
+        { title: "Y = 1", field: "y1", hozAlign: "center", width: 200 },
+      ],
     });
-  </script>
+    updateTableData();
+  });
+
+  function handleInput(event, variableName) {
+    if (variableName === 'priorProb') priorProb = parseFloat(event.target.value);
+    else if (variableName === 'likelihood') likelihood = parseFloat(event.target.value);
+    else if (variableName === 'marginalProb') marginalProb = parseFloat(event.target.value);
+  }
   
-  <style>
-    .slider-container {
-      margin: 20px 0;
-    }
-    
-    .formula {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
-  </style>
-  
-  <div class="formula">
-    <p>Posterior Probability = (Prior Probability × Likelihood) / Marginal Likelihood</p>
-  </div>
-  
-  <div class="slider-container">
-    <label for="priorProbability">Prior Probability: {priorProbability}</label>
-    <input type="range" min="0" max="1" step="0.01" bind:value={priorProbability} on:change={calculatePosterior}>
-  </div>
-  
-  <div class="slider-container">
-    <label for="likelihood">Likelihood: {likelihood}</label>
-    <input type="range" min="0" max="1" step="0.01" bind:value={likelihood} on:change={calculatePosterior}>
-  </div>
-  
-  <div class="slider-container">
-    <label for="marginalLikelihood">Marginal Likelihood: {marginalLikelihood}</label>
-    <input type="range" min="0" max="1" step="0.01" bind:value={marginalLikelihood} on:change={calculatePosterior}>
-  </div>
-  
-  <div class="result">
-    <p>Posterior Probability: {posteriorProbability.toFixed(2)}</p>
-  </div>
-  
+</script>
+
+<style>
+  .slider {
+    width: 100%;
+    margin: 20px 0;
+  }
+  #visualization .tabulator {
+    font-size: 1em; 
+  }
+  #visualization .tabulator-row {
+    padding: 15px; 
+  }
+  #visualization .tabulator-cell {
+    padding: 15px; 
+  }
+</style>
+
+<h2>Bayes' Rule Visualization</h2>
+<div>
+  <label for="priorProb">Prior Probability (P(A)):</label>
+  <input type="range" id="priorProb" class="slider" min="0" max="1" step="0.01" bind:value={priorProb}>
+  <span>{priorProb.toFixed(2)}</span>
+</div>
+<div>
+  <label for="likelihood">Likelihood (P(B|A)):</label>
+  <input type="range" id="likelihood" class="slider" min="0" max="1" step="0.01" bind:value={likelihood}>
+  <span>{likelihood.toFixed(2)}</span>
+</div>
+<div>
+  <label for="marginalProb">Marginal Probability (P(B)):</label>
+  <input type="range" id="marginalProb" class="slider" min="0" max="1" step="0.01" bind:value={marginalProb}>
+  <span>{marginalProb.toFixed(2)}</span>
+</div>
+
+<div id="formula">
+  <p>Posterior Probability: {posteriorProb.toFixed(2)}</p>
+</div>
+
+<div id="visualization"></div>
