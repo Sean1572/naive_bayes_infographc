@@ -102,7 +102,6 @@
 
     <section>
       <h1>Formula Baseline</h1>
-      <BayesViz />
     </section>
 
 
