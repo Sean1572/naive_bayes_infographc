@@ -3,7 +3,7 @@
   import Tidif_hist from "./Tidif_hist.svelte";
   import EmailCloud from "./EmailCloud.svelte";
   import Email from "./Email.svelte";
-  //import BayesViz from './BayesViz.svelte';
+  import BayesViz from './BayesViz.svelte';
 
   let count, index, offset, progress;
   let width, height;
@@ -27,6 +27,8 @@
 
 <main>
   <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
+  
+  <BayesViz></BayesViz>
   <Scroller
     top={0.0}
     bottom={1}

@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  let Tabulator;
+  import * as Tabulator from 'tabulator-tables';
+  console.log("running", Tabulator)
 
 
   let priorProb = 0.5;
@@ -26,11 +27,9 @@
   }
 
   onMount( async () => {
-    const module = await import('tabulator-tables');
-    Tabulator = module.default;
 
 
-    table = new Tabulator("#visualization", {
+    table = new Tabulator.Tabulator("#visualization", {
       height: "311px",
       data: [],
       columns: [
@@ -39,6 +38,7 @@
         { title: "Y = 1", field: "y1", hozAlign: "center", width: 200 },
       ],
     });
+    console.log(table)
     updateTableData();
   });
 
