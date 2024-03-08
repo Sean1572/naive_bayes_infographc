@@ -4,13 +4,24 @@
   import EmailCloud from "./EmailCloud.svelte";
   import Email from "./Email.svelte";
   import { min } from "d3";
+  import { onMount } from 'svelte';
   //import BayesViz from './BayesViz.svelte';
+
+ 
 
   let count, index, offset, progress;
   let width, height;
   let word = "call"
   let uncommon_vis = false;
   let common_vis = false;
+  let its_go_time = false
+
+  onMount( async () => { 
+    console.log("hello?")
+    its_go_time = true;
+
+  })
+
   //Handle un/common words
   function update_words() {
     
@@ -20,17 +31,41 @@
   }
   $: index, update_words();
 
-  
+  //https://javascript.plainenglish.io/how-to-get-the-height-of-the-entire-document-with-javascript-199a7e0a8299
+  // function get_doc_height() {
 
-  let email_example_opacity = 0.3
-  $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: index, console.log(email_example_opacity, index, offset);
+  //   if (!its_go_time) {
+  //     return 0.0
+  //   }
+  //   try {
+  //     const body = document.body;
+  //     const html = document.documentElement;
+  //     const height = Math.max(body.scrollHeight, body.offsetHeight,
+  //       html.clientHeight, html.scrollHeight, html.offsetHeight);
+  //     console.log(height) 
+  //     return height
+  //   } catch (error) {
+  //     return 0.0
+  //   }
+    
+    
+  // }
  
 
+  let email_example_opacity = 0.3
+  let histogram_opacity = 0.0
+  $: index, email_example_opacity  = index + offset - 0.5 - 6
+  $: index, histogram_opacity  = index + offset - 0.5 - 12
+  //$: progress, console.log(window.screen)
+  
+  // let screen_y = 0.0
+  // $: progress, screen_y = get_doc_height()*progress
+    //<p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
+    //<p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
 </script>
-
+ 
 <main>
-  <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
+  
   <Scroller
     top={0.0}
     bottom={1}
@@ -60,7 +95,7 @@
 
 
     <div class="content">
-      <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
+      
       
       <!-- Putting this here temporarly while I fix it up! -->
       
@@ -140,6 +175,16 @@
   </div>
 
   <div class="foreground" slot="foreground">
+    <div class="interactables">
+      <div 
+        class="interactables-histogram-a"
+        style="opacity: {histogram_opacity}"
+      >
+        <Tidif_hist bind:word={word} class="intro_tidif"/>
+      </div>
+    </div>
+    
+    
     <section />
     <section />
     <section />
@@ -156,9 +201,9 @@
 
       
     <section>
-      Consider emails
+     
       
-      <Tidif_hist bind:word={word} class="intro_tidif"/>
+      
       
     </section>
 
@@ -230,6 +275,15 @@
     text-align: center;
   }
 
+  .interactables {
+    width: 100%;
+    position: fixed; 
+    max-width: 750px; 
+    margin: auto; 
+    height: 90%;
+  }
+
+
   .email_examples{
     position: absolute;
     margin-left: 31%;
@@ -256,5 +310,7 @@
     color: orange;
     font-weight: bold;
   }
+
+
 </style>
 

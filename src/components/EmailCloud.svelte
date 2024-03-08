@@ -6,6 +6,7 @@
 
     export let frame = 1;
 
+
     let allData = []; 
     let svg;
    

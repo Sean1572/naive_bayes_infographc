@@ -109,10 +109,8 @@
   }
 
   $: word, update_data();
-
-
-
-
+  
+  
 </script>
 
 <div class="visualization">
@@ -121,7 +119,7 @@
       {width}
       {height}
       viewBox="0 0 {width} {height}"
-      style="max-width: 100%; height: auto;">
+      style="">
           <!-- x-axis -->
           <g bind:this={gx} transform="translate({marginLeft},{height - marginBottom})" />
           <!-- y-axis -->
@@ -145,3 +143,18 @@
   </svg>
 </div>
 
+<style>
+  .visualization {
+    position: absolute;
+    left:0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    margin: auto;
+    margin-top: auto;
+    width: 100%;
+    height: max-content;
+    
+    
+  }
+</style>
