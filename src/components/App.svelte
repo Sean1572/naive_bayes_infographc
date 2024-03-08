@@ -3,6 +3,7 @@
   import Tidif_hist from "./Tidif_hist.svelte";
   import EmailCloud from "./EmailCloud.svelte";
   import Email from "./Email.svelte";
+  import { min } from "d3";
   //import BayesViz from './BayesViz.svelte';
 
   let count, index, offset, progress;
@@ -19,9 +20,12 @@
   }
   $: index, update_words();
 
-  $: index, console.log(index);
+  
 
-
+  let email_example_opacity = 0.3
+  $: index, email_example_opacity  = index + offset - 0.5 - 6
+  $: index, console.log(email_example_opacity, index, offset);
+ 
 
 </script>
 
@@ -63,7 +67,7 @@
       
       <EmailCloud frame={index}/>
 
-
+      <div style="opacity: {email_example_opacity}">
       {#if (index > 5) && (index < 8)}
             <h2  class="email_examples" style="position: absolute; top: 10%;">
               some messages contain words unique to a few number of messages
@@ -129,7 +133,7 @@
             </p>
         </div>
       {/if}
-      
+      </div>
       
     </div>
 
