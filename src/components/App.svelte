@@ -6,6 +6,7 @@
   import { min } from "d3";
   import { onMount } from 'svelte';
   //import BayesViz from './BayesViz.svelte';
+  import BayesGauss from './BayesGauss.svelte'
 
  
 
@@ -215,8 +216,13 @@
       <h1>Formula Baseline</h1>
     </section>
 
-    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
-    <section>Variants _ Visualization</section>
+    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)
+    </section>
+    <section>Variants _ Visualization
+    <div class="foreground">
+      <BayesGauss/>
+    </div>
+    </section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
     <section>Refrences</section>
 
