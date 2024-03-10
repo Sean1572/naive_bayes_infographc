@@ -308,8 +308,7 @@
 
     </section>
 
-    <section>
-    </section>
+    
 
     <section>
       <h1>Formula Revisted</h1>
