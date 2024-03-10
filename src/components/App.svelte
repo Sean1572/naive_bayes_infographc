@@ -317,10 +317,6 @@
       <BayesViz/>
     </section>
     <section>
-    </section>
-    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)
-    </section>
-    <section>
     <div class="foreground">
       <BayesGauss/>
       <GuassVis/>
