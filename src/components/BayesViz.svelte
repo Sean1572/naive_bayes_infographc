@@ -1,46 +1,49 @@
 <script>
   import { onMount } from 'svelte';
-  let Tabulator;
+  import * as agGrid from 'ag-grid-community';
 
 
   let priorProb = 0.5;
   let likelihood = 0.7;
   let marginalProb = 0.8;
-  let table;
 
   $: posteriorProb = (priorProb * likelihood) / marginalProb;
 
-  function updateTableData() {
-    const tableData = [
-      { x: 0, y0: '0%', y1: '0%' },
-      { x: 1, y0: '5%', y1: '0%' },
-      { x: 2, y0: '10%', y1: '5%' },
-      { x: 3, y0: '15%', y1: '15%' },
-      { x: 4, y0: '5%', y1: '20%' },
-      { x: 5, y0: '0%', y1: '15%' },
-      { x: 6, y0: '0%', y1: '10%' },
-    ];
-    if (table) {
-      table.setData(tableData);
-    }
-  }
+  const tableData = [
+    { "x": 0, "y0": '0%', "y1": '0%' },
+    { "x": 1, "y0": '5%', "y1": '0%' },
+    { "x": 2, "y0": '10%', "y1": '5%' },
+    { "x": 3, "y0": '15%', "y1": '15%' },
+    { "x": 4, "y0": '5%', "y1": '20%' },
+    { "x": 5, "y0": '0%', "y1": '15%' },
+    { "x": 6, "y0": '0%', "y1": '10%' },
+  ];
+    
 
-  onMount( async () => {
-    const module = await import('tabulator-tables');
-    Tabulator = module.default;
+    const gridOptions = {
+    rowData: tableData,
+    columnDefs: [
+      { field: "x" },
+      { field: "y0" },
+      { field: "y1" },
+  ]
+}
 
+onMount(() => {
+  const myGridElement = document.querySelector('#visualization');
+  agGrid.createGrid(myGridElement, gridOptions);
+  
+  const agGridCSS = document.createElement('link');
+    agGridCSS.rel = 'stylesheet';
+    agGridCSS.href = 'https://cdn.jsdelivr.net/npm/ag-grid-community@29.0.0/styles/ag-grid.css';
+    document.head.appendChild(agGridCSS);
 
-    table = new Tabulator("#visualization", {
-      height: "311px",
-      data: [],
-      columns: [
-        { title: "X", field: "x", hozAlign: "center", width: 200 },
-        { title: "Y = 0", field: "y0", hozAlign: "center", width: 200 },
-        { title: "Y = 1", field: "y1", hozAlign: "center", width: 200 },
-      ],
-    });
-    updateTableData();
-  });
+    const agGridThemeCSS = document.createElement('link');
+    agGridThemeCSS.rel = 'stylesheet';
+    agGridThemeCSS.href = 'https://cdn.jsdelivr.net/npm/ag-grid-community@29.0.0/styles/ag-theme-alpine.css';
+    document.head.appendChild(agGridThemeCSS);
+
+});
 
   function handleInput(event, variableName) {
     if (variableName === 'priorProb') priorProb = parseFloat(event.target.value);
@@ -55,15 +58,27 @@
     width: 100%;
     margin: 20px 0;
   }
-  #visualization .tabulator {
-    font-size: 1em; 
+
+  #visualization {
+		--ag-foreground-color: rgb(126, 46, 132);
+    --ag-background-color: rgb(249, 245, 227);
+    --ag-header-foreground-color: rgb(204, 245, 172);
+    --ag-header-background-color: rgb(209, 64, 129);
+    --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+    --ag-header-column-resize-handle-color: rgb(126, 46, 132);
+
+    --ag-font-size: 17px;
+    --ag-font-family: monospace;
+    width:600px;
+    height:220px; 
+	}	
+
+  .ag-header-cell-label {
+    justify-content: center !important;
+    display: flex;
+    align-items: center;
   }
-  #visualization .tabulator-row {
-    padding: 15px; 
-  }
-  #visualization .tabulator-cell {
-    padding: 15px; 
-  }
+
 </style>
 
 <h2>Bayes' Rule Visualization</h2>
@@ -88,3 +103,4 @@
 </div>
 
 <div id="visualization"></div>
+
