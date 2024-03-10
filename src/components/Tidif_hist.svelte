@@ -2,6 +2,8 @@
   import * as d3 from 'd3';
   import { onMount } from 'svelte';
 
+  export let spam_split = true;
+  export let class_name = "";
   let allData = []; 
   let svg;
   let bins;
@@ -54,8 +56,8 @@
     );
 
   function update_bars(bins, id, fill_color) { 
-      console.log("entered!", d3.select("svg"))
-      d3.select("svelte-scroller-foreground").select("svg").select(id).selectAll("rect")
+      console.log(class_name, d3.select("."+class_name).select("svg").select(id))
+      d3.select("."+class_name).select("svg").select(id).selectAll("rect")
         .data(bins)
         .join(
           function(enter) {
@@ -90,20 +92,35 @@
       return;
     }
 
+    console.log(spam_split)
+    if (spam_split) {
+      let ham_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "ham") })
+      let spam_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "spam") })
+      histogram = d3.histogram()
+        .value(function(d) { return d[word]; })   // I need to give the vector of value
+        .domain(x.domain())  // then the domain of the graphic
+        .thresholds(x.ticks(70)); // then the numbers of bins
+      bins = histogram(ham_data);
+      bins_spam = histogram(spam_data);
+      bins_ham = histogram(ham_data);
 
-    let ham_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "ham") })
-    let spam_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "spam") })
-    histogram = d3.histogram()
-      .value(function(d) { return d[word]; })   // I need to give the vector of value
-      .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(70)); // then the numbers of bins
-    bins = histogram(ham_data);
-    bins_spam = histogram(spam_data);
-    bins_ham = histogram(ham_data);
+
+      update_bars(bins_spam, "#spam", "orange")
+      update_bars(bins_ham, "#ham","blue")
+    } else {
+      
+      histogram = d3.histogram()
+        .value(function(d) { return d[word]; })   // I need to give the vector of value
+        .domain(x.domain())  // then the domain of the graphic
+        .thresholds(x.ticks(70)); // then the numbers of bins
+      bins = histogram(allData);
+      
 
 
-    update_bars(bins_spam, "#spam", "orange")
-    update_bars(bins_ham, "#ham","blue")
+      update_bars(bins, "#spam", "black")
+      
+    }
+    
       
       
   }
@@ -145,16 +162,6 @@
 
 <style>
   .visualization {
-    position: absolute;
-    left:0;
-    right: 0;
-    top:0;
-    bottom: 0;
-    margin: auto;
-    margin-top: auto;
-    width: 100%;
-    height: max-content;
-    
     
   }
 </style>

@@ -5,7 +5,9 @@
   
 
     export let frame = 1;
-
+    export let csv_path = "intro_vis.csv";
+    export let custom_class = "";
+    export let exit_opacity = 0.0;
 
     let allData = []; 
     let svg;
@@ -23,7 +25,7 @@
           width = window.screen.width;
           height = window.screen.height;
           console.log(width, height)
-          allData = await d3.csv("intro_vis.csv");
+          allData = await d3.csv(csv_path);
           n = allData.length
           console.log("hello")
           update_data()
@@ -39,8 +41,9 @@
         .range([0 , height]);
   
     function update_email_svgs(data) { 
-        
-        let emails = d3.select("svg").selectAll(".email_cloud").data(data)
+
+
+        let emails = d3.select("."+custom_class).select("svg").selectAll(".email_cloud").data(data)
           .join(
             function(enter) {
               
@@ -50,13 +53,14 @@
               // Clone doesn't work, it just overwrites the data
               // Can't just be a text, enter.append("email_cloud") tries to do document.createElement("email_cloud")
               return enter.append(() => {
-                let email =  document.getElementsByClassName('email_cloud')
+                let email =  document.getElementsByClassName(custom_class)[0].getElementsByClassName('email_cloud')
+                
                 return email[0].cloneNode(true)
               })
                 .attr("id", "not og")
                 .attr("height", function(d) { return 50 * d.size})
                 .attr("width", function(d) { return 40 * d.size})
-                .attr("opacity", 0.0)
+                .attr("opacity", 1.0)
                 .attr("x", function(d) {return d.x * width})
                 .attr("y", function(d) {return d.y * height})
                 
@@ -69,7 +73,7 @@
               
               return exit.transition()
                 .duration(1000)
-                .attr("opacity", 0.0);
+                .attr("opacity", exit_opacity);
             }
           ).transition()
             .duration(1000)

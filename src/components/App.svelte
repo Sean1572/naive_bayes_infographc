@@ -107,9 +107,9 @@
       
       <!-- Putting this here temporarly while I fix it up! -->
       
-      
-      <EmailCloud frame={index}/>
-
+      {#if (index < 10)}
+        <EmailCloud frame={index} csv_path={"intro_vis.csv"} custom_class="content"/>
+      {/if}
       <div style="opacity: {email_example_opacity}">
       {#if (index > 5) && (index < 8)}
             <h2  class="email_examples" style="position: absolute; top: 10%;">
@@ -134,14 +134,15 @@
           {/if}
 
           {#if (index >= 14) && (index < 15)}
-            <h2  class="email_examples" style="position: absolute; top: 40%;">
-              You can see that spam emails have diffrent tidif values than ham words.
-
-              This means the probablity of emails is diffrent if you know what the tidif values it's words have
-
-              How can we use this in the context of classification?
+            <h2  class="email_examples" style="position: absolute; top: 65%;">
+              The TIDIF values of words depends on if that word is in a spam email or not
             </h2>
           {/if}
+
+
+
+
+
       {#if (index > 5) && (index < 12)}
         <div>
             <p 
@@ -176,6 +177,8 @@
             </p>
         </div>
       {/if}
+
+      
       </div>
       
     </div>
@@ -184,12 +187,14 @@
 
   <div class="foreground" slot="foreground">
     <div class="interactables">
+      {#if (index < 16)}
       <div 
         class="interactables-histogram-a"
         style="opacity: {histogram_opacity}"
       >
-        <Tidif_hist bind:word={word} class="intro_tidif"/>
+        <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
       </div>
+      {/if}
     </div>
     
     
@@ -221,17 +226,75 @@
 
     <section>
       <h1>Formula Baseline</h1>
+      <p> Conditional probablities: Given some information, the probabaltiy of an event changes </p>
+      
+      <img src="conditional_explaination_1.png">
+
+      <p> 
+        But what happens if we want to consider more than one word? 
+        How do we compute the probablity of spam given the tidifs of a collection of words 
+      </p>
+      
+      <p> 
+        P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam
+      </p>
+
+      <img src="Thomas_Bayes.gif">
+      <p> 
+        SOLUTION: BAYES THEORM
+        P(spam | words) = P(spam) * P(words | spam)/p(words):
+      </p>
+      <p> 
+        Lets break this down!
+      </p>
+
+     </section>
+
+      <section>
+
+     
+      <h1>P(spam) = # spam / total emails</h1>
+
+      {#if (index > 10)}
+        <div class="spam_prob" style="width: 60%; margin: auto;">
+        <EmailCloud 
+          frame={1} 
+          csv_path="spam_probablity.csv", 
+          exit_opacity={1.0},
+          custom_class="spam_prob"/>
+        </div>
+      {/if}
+      
+      <p>How likely is the class to exist?</p>
+
+      <h1>P(words) = frequency of the obsreved TF-IDF for each word</h1>
+
+      <div 
+        class="interactables-histogram-b"
+       
+      >
+        <Tidif_hist bind:word={word} class_name="interactables-histogram-b"  spam_split={false}/>
+      </div>
+     
+    </section>
+    <section>
+      <h1> P(words | class) </h1>
+
+      <p>TODO Explain What this means</p>
+      <p>TODO Explain why assuming indepdence helps</p>
+      <p>TODO Put the formula back together again</p>
+
+      
     </section>
 
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)
     </section>
-    <section>Variants _ Visualization
+    <section>
     <div class="foreground">
       <BayesGauss/>
       <GuassVis/>
     </div>
     </section>
-    <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
     <section>Refrences</section>
 
   </div>
@@ -325,6 +388,24 @@
     font-weight: bold;
   }
 
+  .interactables-histogram-b{
+    position: relative;
+    
+  }
+
+  .interactables-histogram-a{
+    position: absolute;
+    left:0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    margin: auto;
+    margin-top: auto;
+    width: 100%;
+    height: max-content;
+    
+    
+  }
 
 </style>
 
