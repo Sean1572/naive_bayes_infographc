@@ -235,10 +235,15 @@
         How do we compute the probablity of spam given the tidifs of a collection of words 
       </p>
       
+      
+
+      
+
+     </section>
+     <section>
       <p> 
         P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam
       </p>
-
       <img src="Thomas_Bayes.gif">
       <p> 
         SOLUTION: BAYES THEORM
@@ -247,9 +252,7 @@
       <p> 
         Lets break this down!
       </p>
-
-     </section>
-
+    </section>
       <section>
 
      
@@ -278,15 +281,40 @@
      
     </section>
     <section>
-      <h1> P(words | class) </h1>
+    </section>
+    <h1> P(words | class) </h1>
+      <img src="conditional_explaination_2.png">
+      <p>knowing what the class is changes the probablity we would see the word</p>
+      <p>This however, allows us to expand this to consider the probablity of more than one word!</p>
 
-      <p>TODO Explain What this means</p>
-      <p>TODO Explain why assuming indepdence helps</p>
-      <p>TODO Put the formula back together again</p>
+      <section>
+        <h1> Aside Indepdence </h1>
+      <img src="no_indepedence.gif">
+      </section>
+   
+      <section>
+      
+      
+      <img src="indepedence.gif">
+      <p>If the TF-IDF values are not indepdenent it implies that the probablitys of the TF-IDF of urgent are influnced by the word free</p>
+      <p style="font-weight: bold;">Naive Bayes Assumes (Naively) Indepdence!</p>
+      <p>TODO ADD VISUALIZATION FOR THIS SPEFIFIC BIT Therefore P(words | class) = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
+      <p>Notation $PIP(word i | class)$ = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
+
 
       
-    </section>
 
+
+    </section>
+    <section>
+      <h1>Formula Revisted</h1>
+      <p>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
+    </section>
+    
+    <section>
+    </section>
+    <section>
+    </section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)
     </section>
     <section>
@@ -331,7 +359,7 @@
     /* color: white; */
     outline: magenta solid 3px;
     text-align: center;
-    max-width: 750px; /* adjust at will */
+    min-width: 750px;  /* adjust at will */
     color: black;
     padding: 1em;
     margin: 0 0 2em 0;
@@ -355,7 +383,7 @@
   .interactables {
     width: 100%;
     position: fixed; 
-    max-width: 750px; 
+    min-width: 750px; 
     margin: auto; 
     height: 90%;
   }
