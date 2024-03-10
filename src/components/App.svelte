@@ -7,6 +7,7 @@
   import { onMount } from 'svelte';
   //import BayesViz from './BayesViz.svelte';
   import BayesGauss from './BayesGauss.svelte'
+  import GuassVis from "./GuassVis.svelte";
 
  
 
@@ -227,6 +228,7 @@
     <section>Variants _ Visualization
     <div class="foreground">
       <BayesGauss/>
+      <GuassVis/>
     </div>
     </section>
     <section>Interactive example with email spam (allow user to play with the embedding types, columns, data transofrmations etc)</section>
