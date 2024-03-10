@@ -5,7 +5,7 @@
   import Email from "./Email.svelte";
   import { min } from "d3";
   import { onMount } from 'svelte';
-  //import BayesViz from './BayesViz.svelte';
+  import BayesViz from './BayesViz.svelte';
   import BayesGauss from './BayesGauss.svelte'
   import GuassVis from "./GuassVis.svelte";
 
@@ -186,16 +186,17 @@
   </div>
 
   <div class="foreground" slot="foreground">
-    <div class="interactables">
-      {#if (index < 16)}
-      <div 
-        class="interactables-histogram-a"
-        style="opacity: {histogram_opacity}"
-      >
-        <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
-      </div>
+    
+      {#if (index < 25 ) && (index < 16)}
+
+        <div 
+          class="interactables-histogram-a"
+          style="opacity: {histogram_opacity}"
+        >
+          <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
+        </div>
       {/if}
-    </div>
+  
     
     
     <section />
@@ -306,12 +307,14 @@
 
 
     </section>
+
+    <section>
+    </section>
+
     <section>
       <h1>Formula Revisted</h1>
       <p>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
-    </section>
-    
-    <section>
+      <BayesViz/>
     </section>
     <section>
     </section>
