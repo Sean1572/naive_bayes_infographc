@@ -52,11 +52,17 @@
     
   // }
  
-
+  function change_histogram_opacity() {
+    if (index > 14) {
+      return 0
+    }
+    return index + offset - 0.5 - 12
+  }
   let email_example_opacity = 0.3
   let histogram_opacity = 0.0
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: index, histogram_opacity  = index + offset - 0.5 - 12
+  $: progress, histogram_opacity  =  change_histogram_opacity()
+
   //$: progress, console.log(window.screen)
   
   // let screen_y = 0.0
