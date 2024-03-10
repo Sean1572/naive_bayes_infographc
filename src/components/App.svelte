@@ -215,13 +215,7 @@
 
       
     <section>
-     
-      
-      
-      
     </section>
-
-
     <section />
 
 
@@ -301,11 +295,6 @@
       <p style="font-weight: bold;">Naive Bayes Assumes (Naively) Indepdence!</p>
       <p>TODO ADD VISUALIZATION FOR THIS SPEFIFIC BIT Therefore P(words | class) = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
       <p>Notation $PIP(word i | class)$ = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
-
-
-      
-
-
     </section>
 
     
@@ -321,6 +310,8 @@
       <GuassVis/>
     </div>
     </section>
+
+    <section/>
     <section>Refrences</section>
 
   </div>
