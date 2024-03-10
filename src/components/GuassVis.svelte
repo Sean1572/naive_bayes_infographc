@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
   
+    let has_mounted = false
     let data = [
       // data here
         {"Temperature": 24.73, "Humidity": 47.66, "WillRain": "No"},
@@ -34,6 +35,7 @@
   
     function setupHistogram(variable, filteredData) {
       const svg = d3.select(`#${variable.toLowerCase()}Histogram`);
+      console.log(`#${variable.toLowerCase()}Histogram`, svg)
       svg.selectAll("*").remove(); 
   
       const margin = {top: 20, right: 30, bottom: 40, left: 50},
@@ -48,7 +50,7 @@
       const histogram = d3.histogram()
                           .value(d => d[variable])
                           .domain(x.domain())
-                          .thresholds(x.ticks(20));
+                          .thresholds(x.ticks(10));
   
       const bins = histogram(filteredData);
   
@@ -83,10 +85,11 @@
       // initial drawing of hists
       setupHistogram('Temperature', filterData(currentCategory));
       setupHistogram('Humidity', filterData(currentCategory));
+      has_mounted = true;
     });
   
     // redraw hists
-    $: if (currentCategory) {
+    $: if (currentCategory && has_mounted) {
       setupHistogram('Temperature', filterData(currentCategory));
       setupHistogram('Humidity', filterData(currentCategory));
     }
