@@ -53,16 +53,25 @@
     
   // }
  
-  function change_histogram_opacity() {
-    if (index > 14) {
-      return 0
+  // As you approch the bounds, it start changing the opacity
+  function change_opacity(opacity, upper_bound=14, lower_bound=13) {
+    if (index > upper_bound) {
+      let distance_to_upper = ((upper_bound+1) / count) - progress
+      distance_to_upper /= ((upper_bound+1) / count) - ((upper_bound) / count)
+      return Math.max(distance_to_upper + 0.5, 0)
     }
-    return index + offset - 0.5 - 12
+    else if (index < lower_bound) {
+      let distance_to_lower = progress  - ((lower_bound-1) / count)
+      distance_to_lower /= ((lower_bound) / count) - ((lower_bound-1) / count) 
+      return Math.max(distance_to_lower + 0.5, 0) //Seemed needed to fix timing, maybe offset for index?
+    } else {
+      return 1
+    }
   }
   let email_example_opacity = 0.3
   let histogram_opacity = 0.0
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: progress, histogram_opacity  =  change_histogram_opacity()
+  $: progress, histogram_opacity  =  change_opacity(histogram_opacity, 14)
 
   //$: progress, console.log(window.screen)
   
@@ -134,7 +143,7 @@
           {/if}
 
           {#if (index >= 14) && (index < 15)}
-            <h2  class="email_examples" style="position: absolute; top: 65%;">
+            <h2  class="email_examples" style="position: absolute; top: 2%;">
               The TIDIF values of words depends on if that word is in a spam email or not
             </h2>
           {/if}
@@ -187,7 +196,7 @@
 
   <div class="foreground" slot="foreground">
     
-      {#if (index < 25 ) && (index < 16)}
+      <!-- {#if (index < 25 ) && (index < 16)} -->
 
         <div 
           class="interactables-histogram-a"
@@ -195,16 +204,25 @@
         >
           <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
         </div>
-      {/if}
+      <!-- {/if} -->
   
     
     
+    <section>
+      <h1>We get a lot of emails</h1>
+
+      <p style="font-weight: 100;">scroll to read</p>
+    </section>
     <section />
     <section />
+    <section>
+      <h1>A LOT of emails</h1>
+    </section>
     <section />
-    <section />
-    <section />
-    <section />
+    <section>
+      <h1>And plently of it is Spam</h1>
+    </section>
+    <h1>Is there anything we can do?</h1>
     <section />
     <section />
     <section />
@@ -218,7 +236,7 @@
     </section>
     <section />
 
-
+    <section />
     <section>
       <h1>Formula Baseline</h1>
       <p> Conditional probablities: Given some information, the probabaltiy of an event changes </p>
@@ -411,9 +429,7 @@
   }
 
   .interactables-histogram-a{
-    position: absolute;
-    left:0;
-    right: 0;
+    position: fixed;
     top:0;
     bottom: 0;
     margin: auto;
