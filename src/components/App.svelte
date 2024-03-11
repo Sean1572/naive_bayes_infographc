@@ -82,6 +82,9 @@
 </script>
  
 <main>
+  <div class="test_tidif">
+    <Tidif_hist bind:word={word} class_name="test_tidif"  spam_split={true}/>
+  </div>
   
   <Scroller
     top={0.0}

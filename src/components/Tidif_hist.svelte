@@ -107,6 +107,7 @@
 
       update_bars(bins_spam, "#spam", "orange")
       update_bars(bins_ham, "#ham","blue")
+      update_probablity(ham_data, spam_data)
     } else {
       
       histogram = d3.histogram()
@@ -124,6 +125,39 @@
       
       
   }
+
+  function update_probablity(ham_data, spam_data) {
+    //https://d3js.org/d3-drag
+      const svg = d3.select("."+class_name).select("svg")
+      svg.append("rect")
+          .attr("x", function(d) {return 100})
+          .attr("y", marginTop)
+          .attr("width", 5)
+          .attr("height", height - marginBottom - marginTop)
+          .style("fill", "red")
+          .style("opacity", 0.5)
+          .call(
+            d3.drag()
+              .on("start", null)
+              .on("drag", function(event) {
+                let new_x =  event.x
+                if ((new_x > marginLeft) && (new_x < width - marginRight)){
+                  d3.select(this).attr("x", new_x)
+                }                
+              })
+              .on("end", null)
+          )
+          .on('pointerenter pointermove', function(event) {
+
+            d3.select(this).style("stroke-width", 2)
+            d3.select(this).style("stroke",  "red")
+          })
+          .on('pointerleave', function(event) {
+            d3.select(this).style("stroke-width", 0)
+            d3.select(this).style("stroke",  "red")
+          });;
+  }
+    
 
   $: word, update_data();
   
