@@ -158,7 +158,7 @@
           {/if}
           {#if (index >= 15) && (index < 16)}
             <h2  class="email_examples" style="position: absolute; top: 2%;">
-              Note the probablity of Spam Emails change as we create a threshold at some TF-IDF Value
+              Note the probablity of Spam Emails change as we create a threshold at some TF-IDF Value (drag line to change)
             </h2>
           {/if}
           {#if (index >= 16) && (index < 17)}
