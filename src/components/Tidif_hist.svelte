@@ -21,11 +21,11 @@
   const marginLeft = 40;
   const marginTop = 40;
   const marginRight = 40;
+  let TODO_DELETE = true;
 
   onMount(async () => {
         allData = await d3.csv("tidif_counts.csv");
         n = allData.length
-        console.log("hello")
         update_data()
   })
 
@@ -33,6 +33,10 @@
   $: x = d3.scaleLinear()
       .domain([0, 1])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
       .range([0, width- marginLeft - marginRight]);
+
+  $: x_inverse = d3.scaleLinear()
+      .domain([0, width- marginLeft - marginRight])     
+      .range([0, 1]);
 
   $: y = d3.scaleLinear()
       .domain([0.05, 0])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
@@ -55,8 +59,13 @@
         .attr('height', height - marginBottom),
     );
 
+  //https://stackoverflow.com/questions/68992663/d3-round-number-from-nest-and-sum
+  //javascript why
+  function round(x, position) {
+    return Math.round(x*(10**position))/(10**position)
+  }
+
   function update_bars(bins, id, fill_color) { 
-      console.log(class_name, d3.select("."+class_name).select("svg").select(id))
       d3.select("."+class_name).select("svg").select(id).selectAll("rect")
         .data(bins)
         .join(
@@ -71,11 +80,9 @@
               .style("opacity", 0.5);
           },
           function(update) {
-              console.log("update!");
               return update;
           },
           function(exit) {
-            console.log("remove!");
             return exit.transition()
               .duration(800)
               .attr("height", function(d) { return height - marginBottom - marginTop; })
@@ -92,10 +99,11 @@
       return;
     }
 
-    console.log(spam_split)
+
     if (spam_split) {
       let ham_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "ham") })
       let spam_data = allData.filter(function(d){ return (d[word] > 0) & (d.label == "spam") })
+
       histogram = d3.histogram()
         .value(function(d) { return d[word]; })   // I need to give the vector of value
         .domain(x.domain())  // then the domain of the graphic
@@ -126,39 +134,81 @@
       
   }
 
+  let x_bar = 0.5*(width - marginLeft - marginRight)
   function update_probablity(ham_data, spam_data) {
     //https://d3js.org/d3-drag
       const svg = d3.select("."+class_name).select("svg")
-      svg.append("rect")
-          .attr("x", function(d) {return 100})
-          .attr("y", marginTop)
-          .attr("width", 5)
-          .attr("height", height - marginBottom - marginTop)
-          .style("fill", "red")
-          .style("opacity", 0.5)
-          .call(
-            d3.drag()
-              .on("start", null)
-              .on("drag", function(event) {
-                let new_x =  event.x
-                if ((new_x > marginLeft) && (new_x < width - marginRight)){
-                  d3.select(this).attr("x", new_x)
-                }                
-              })
-              .on("end", null)
-          )
-          .on('pointerenter pointermove', function(event) {
+      const rect = svg.select("#bar").select("rect")
+            .attr("x", function(d) {return x_bar})
+            .attr("y", marginTop)
+            .attr("width", 5)
+            .attr("height", height - marginBottom - marginTop)
+            .style("fill", "red")
+            .style("opacity", 0.5)
+            .call(
+              d3.drag()
+                .on("drag", function(event) {
+                  let new_x =  event.x
+                  if ((new_x > marginLeft) && (new_x < width - marginRight)){
+                    x_bar = new_x
+                    //d3.select(this).attr("x", new_x)
+                  }                
+                })
+            )
+            .on('pointerenter pointermove', function(event) {
 
-            d3.select(this).style("stroke-width", 2)
-            d3.select(this).style("stroke",  "red")
-          })
-          .on('pointerleave', function(event) {
-            d3.select(this).style("stroke-width", 0)
-            d3.select(this).style("stroke",  "red")
-          });;
+              d3.select(this).style("stroke-width", 2)
+              d3.select(this).style("stroke",  "red")
+            })
+            .on('pointerleave', function(event) {
+              d3.select(this).style("stroke-width", 0)
+              d3.select(this).style("stroke",  "red")
+            });
+
+    let spam_num_right = spam_data.filter(function(d){ return (d[word] > x_inverse(x_bar))}).length
+    let spam_num_left = spam_data.filter(function(d){ return (d[word] <= x_inverse(x_bar))}).length
+
+    let ham_num_right = ham_data.filter(function(d){ return (d[word] > x_inverse(x_bar))}).length
+    let ham_num_left = ham_data.filter(function(d){ return (d[word] <= x_inverse(x_bar))}).length
+    
+    let left_total = Math.max(spam_num_left + ham_num_left, 1)
+    let right_total = Math.max(spam_num_right + ham_num_right, 1)
+
+    let prob_ham_given_left = round(ham_num_left/left_total, 2)
+    let prob_spam_given_left = round(spam_num_left/left_total, 2)
+
+    let prob_ham_given_right = round(ham_num_right/right_total, 2)
+    let prob_spam_given_right = round(spam_num_right/right_total, 2)
+    
+    // console.log("+++=======================================+++")
+    // console.log(prob_ham_given_left, prob_spam_given_left)
+    // console.log(prob_ham_given_right, prob_spam_given_right)
+    
+    //https://www.geeksforgeeks.org/d3-js-selection-text-function/
+    svg.select("#right_spam")
+            .text("Spam: " + prob_spam_given_right)
+            .attr("x", function(d) {return x_bar + 10})
+            .attr("y", marginTop + 20)
+
+    svg.select("#right_ham")
+            .text("Ham: " + prob_ham_given_right)
+            .attr("x", function(d) {return x_bar + 10})
+            .attr("y", marginTop + 40)
+
+    svg.select("#left_spam")
+            .text("Spam: " + prob_spam_given_left)
+            .attr("x", function(d) {return x_bar - 80})
+            .attr("y", marginTop + 20)
+
+
+    svg.select("#left_ham")
+            .text("Ham: " + prob_ham_given_left)
+            .attr("x", function(d) {return x_bar - 80})
+            .attr("y", marginTop + 40)
+    
   }
     
-
+  $: x_bar, update_data()
   $: word, update_data();
   
   
@@ -189,6 +239,13 @@
 
           <g id="spam"></g>
           <g id="ham"></g>
+          <g id="bar">
+            <rect/>
+            <text id="right_spam"></text>
+            <text id="left_spam"></text>
+            <text id="right_ham"></text>
+            <text id="left_ham"></text>
+          </g>
       
           
   </svg>
