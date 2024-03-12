@@ -3,7 +3,9 @@
   import { onMount } from 'svelte';
 
   export let spam_split = true;
+  export let no_prob = true;
   export let class_name = "";
+
   let allData = []; 
   let svg;
   let bins;
@@ -136,8 +138,14 @@
 
   let x_bar = 0.5*(width - marginLeft - marginRight)
   function update_probablity(ham_data, spam_data) {
-    //https://d3js.org/d3-drag
-      const svg = d3.select("."+class_name).select("svg")
+      const svg = d3.select("."+class_name).select("svg")  
+      if (no_prob) {
+        svg.selectAll("text").text("");
+        svg.select("#bar").select("rect").style("opacity", 0.0)
+        return
+      };
+
+      //https://d3js.org/d3-drag      
       const rect = svg.select("#bar").select("rect")
             .attr("x", function(d) {return x_bar})
             .attr("y", marginTop)
@@ -210,6 +218,8 @@
     
   $: x_bar, update_data()
   $: word, update_data();
+  $: no_prob, update_data();
+  $: no_prob, console.log("updated no_prob ", no_prob, class_name)
   
   
 </script>

@@ -70,9 +70,11 @@
   }
   let email_example_opacity = 0.3
   let histogram_opacity = 0.0
+  let no_prob = false;
   $: index, email_example_opacity  = index + offset - 0.5 - 6
   $: progress, histogram_opacity  =  change_opacity(histogram_opacity, 14)
-
+  $: index, no_prob = index < 15;
+  $: index, console.log(no_prob)
   //$: progress, console.log(window.screen)
   
   // let screen_y = 0.0
@@ -82,9 +84,13 @@
 </script>
  
 <main>
-  <div class="test_tidif">
-    <Tidif_hist bind:word={word} class_name="test_tidif"  spam_split={true}/>
-  </div>
+  <!-- <div class="test_tidif">
+    <Tidif_hist 
+      bind:word={word}
+      bind:no_prob={no_prob} 
+      class_name="test_tidif"  
+      spam_split={true}/>
+  </div> -->
   
   <Scroller
     top={0.0}
@@ -205,7 +211,7 @@
           class="interactables-histogram-a"
           style="opacity: {histogram_opacity}"
         >
-          <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
+          <Tidif_hist bind:no_prob={no_prob}  bind:word={word} class_name="interactables-histogram-a"/>
         </div>
       <!-- {/if} -->
   
