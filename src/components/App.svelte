@@ -54,7 +54,7 @@
   // }
  
   // As you approch the bounds, it start changing the opacity
-  function change_opacity(opacity, upper_bound=14, lower_bound=13) {
+  function change_opacity(opacity, upper_bound=16, lower_bound=13) {
     if (index > upper_bound) {
       let distance_to_upper = ((upper_bound+1) / count) - progress
       distance_to_upper /= ((upper_bound+1) / count) - ((upper_bound) / count)
@@ -70,9 +70,11 @@
   }
   let email_example_opacity = 0.3
   let histogram_opacity = 0.0
+  let no_prob = false;
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: progress, histogram_opacity  =  change_opacity(histogram_opacity, 14)
-
+  $: progress, histogram_opacity  =  change_opacity(histogram_opacity)
+  $: index, no_prob = index < 15;
+  $: index, console.log(no_prob)
   //$: progress, console.log(window.screen)
   
   // let screen_y = 0.0
@@ -82,6 +84,13 @@
 </script>
  
 <main>
+  <!-- <div class="test_tidif">
+    <Tidif_hist 
+      bind:word={word}
+      bind:no_prob={no_prob} 
+      class_name="test_tidif"  
+      spam_split={true}/>
+  </div> -->
   
   <Scroller
     top={0.0}
@@ -147,6 +156,16 @@
               The TIDIF values of words depends on if that word is in a spam email or not
             </h2>
           {/if}
+          {#if (index >= 15) && (index < 16)}
+            <h2  class="email_examples" style="position: absolute; top: 2%;">
+              Note the probablity of Spam Emails change as we create a threshold at some TF-IDF Value (drag line to change)
+            </h2>
+          {/if}
+          {#if (index >= 16) && (index < 17)}
+            <h2  class="email_examples" style="position: absolute; top: 2%;">
+              Given we know the TF-IDF of a word in an email, the probablity of the email being spam changes
+            </h2>
+          {/if}
 
 
 
@@ -202,7 +221,7 @@
           class="interactables-histogram-a"
           style="opacity: {histogram_opacity}"
         >
-          <Tidif_hist bind:word={word} class_name="interactables-histogram-a"/>
+          <Tidif_hist bind:no_prob={no_prob}  bind:word={word} class_name="interactables-histogram-a"/>
         </div>
       <!-- {/if} -->
   
@@ -230,18 +249,14 @@
     <section />
     <section />
     <section />
-
-      
-    <section>
-    </section>
     <section />
-
+    <section />
+    <section />
+    <section />
     <section />
     <section>
       <h1>Formula Baseline</h1>
       <p> Conditional probablities: Given some information, the probabaltiy of an event changes </p>
-      
-      <img src="conditional_explaination_1.png">
 
       <p> 
         But what happens if we want to consider more than one word? 
