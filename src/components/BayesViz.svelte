@@ -8,11 +8,6 @@
   let selectedY = null; 
   let selectedDimension = 'none'; 
 
-  
-
-  let priorProb = 0.5;
-  let likelihood = 0.7;
-  let marginalProb = 0.8;
 
   let calculatedValue = 0; 
   $: if (selectedProbabilityType && selectedColumn !== 'none') {
@@ -194,6 +189,8 @@ function calculateMarginalProbabilityForRow() {
     calculatedValue = probabilityPYGivenX;
     console.log(`P(Y=${selectedY}|X=${selectedX}) = ${calculatedValue}`);
   }
+
+  console.log("hello its me");
 
 </script>
 
