@@ -130,39 +130,39 @@
       {/if}
       <div style="opacity: {email_example_opacity}">
       {#if (index > 5) && (index < 8)}
-            <h2  class="email_examples" style="position: absolute; top: 10%;">
-              some messages contain words unique to a few number of messages
+            <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
+              Some messages contain words unique to a few number of messages
             </h2>
           {/if}
           {#if (index >= 8) && (index < 10)}
-            <h2  class="email_examples" style="position: absolute; top: 10%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
               Some of the words are commonly found in all messages
             </h2>
           {/if}
           {#if (index >= 10) && (index < 12)}
-            <h2  class="email_examples" style="position: absolute; top: 10%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
               TIDIF can measure how "unique" a word in a given message is compared to an entire document
             </h2>
           {/if}
 
           {#if (index >= 12) && (index < 13)}
-            <h2  class="email_examples" style="position: absolute; top: 40%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 40%;">
               What happens if we plot a histogram of tidif values on a histogram?
             </h2>
           {/if}
 
           {#if (index >= 14) && (index < 15)}
-            <h2  class="email_examples" style="position: absolute; top: 2%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
               The TIDIF values of words depends on if that word is in a spam email or not
             </h2>
           {/if}
           {#if (index >= 15) && (index < 16)}
-            <h2  class="email_examples" style="position: absolute; top: 2%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
               Note the probablity of Spam Emails change as we create a threshold at some TF-IDF Value (drag line to change)
             </h2>
           {/if}
           {#if (index >= 16) && (index < 17)}
-            <h2  class="email_examples" style="position: absolute; top: 2%;">
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
               Given we know the TF-IDF of a word in an email, the probablity of the email being spam changes
             </h2>
           {/if}
@@ -228,20 +228,20 @@
     
     
     <section>
-      <h1>We get a lot of emails</h1>
+      <h1 class='headerText'>We get a lot of emails</h1>
 
       <p style="font-weight: 100;">scroll to read</p>
     </section>
     <section />
     <section />
     <section>
-      <h1>A LOT of emails</h1>
+      <h1 class='headerText'>A LOT of emails</h1>
     </section>
     <section />
     <section>
-      <h1>And plently of it is Spam</h1>
+      <h1 class='headerText'>And plently of it is Spam</h1>
     </section>
-    <h1>Is there anything we can do?</h1>
+    <h1 class='headerText'>Is there anything we can do?</h1>
     <section />
     <section />
     <section />
@@ -255,12 +255,14 @@
     <section />
     <section />
     <section>
-      <h1>Formula Baseline</h1>
-      <p> Conditional probablities: Given some information, the probabaltiy of an event changes </p>
+      <h1 class='headerText'>Formula Baseline</h1>
+      <p class='basicText'> Conditional probablities: Given some information, the probabaltiy of an event changes. </p>
 
-      <p> 
+      <p class='basicText'> 
         But what happens if we want to consider more than one word? 
-        How do we compute the probablity of spam given the tidifs of a collection of words 
+      </p>
+      <p class='basicText'>
+        How do we compute the probablity of spam given the tidifs of a collection of words?
       </p>
       
       
@@ -269,22 +271,24 @@
 
      </section>
      <section>
-      <p> 
-        P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam
+      <p class='basicText'> 
+        P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam?
       </p>
       <img src="Thomas_Bayes.gif">
-      <p> 
-        SOLUTION: BAYES THEORM
+      <p class='basicText'> 
+        SOLUTION: BAYES THEOREM
+      </p>
+      <p class='basicText'>
         P(spam | words) = P(spam) * P(words | spam)/p(words):
       </p>
-      <p> 
+      <p class='basicText'> 
         Lets break this down!
       </p>
     </section>
       <section>
 
      
-      <h1>P(spam) = # spam / total emails</h1>
+      <h1 class='smallerheaderText'>P(spam) = # spam / total emails</h1>
 
       {#if (index > 10)}
         <div class="spam_prob" style="width: 60%; margin: auto;">
@@ -296,9 +300,9 @@
         </div>
       {/if}
       
-      <p>How likely is the class to exist?</p>
+      <p class='basicText'>How likely is the class to exist?</p>
 
-      <h1>P(words) = frequency of the obsreved TF-IDF for each word</h1>
+      <h1 class='smallerheaderText'>P(words) = frequency of the obsreved TF-IDF for each word</h1>
 
       <div 
         class="interactables-histogram-b"
@@ -310,13 +314,13 @@
     </section>
     <section>
     </section>
-    <h1> P(words | class) </h1>
+    <h1 class='headerText'> P(words | class) </h1>
       <img src="conditional_explaination_2.png">
-      <p>knowing what the class is changes the probablity we would see the word</p>
-      <p>This however, allows us to expand this to consider the probablity of more than one word!</p>
+      <p class='basicText'>Knowing what the class is changes the probablity we would see the word.</p>
+      <p class='basicText'>This, however, allows us to expand this to consider the probablity of more than one word!</p>
 
       <section>
-        <h1> Aside Indepdence </h1>
+        <h1 class='headerText'> Aside Indepdence </h1>
       <img src="no_indepedence.gif">
       </section>
    
@@ -324,8 +328,8 @@
       
       
       <img src="indepedence.gif">
-      <p>If the TF-IDF values are not indepdenent it implies that the probablitys of the TF-IDF of urgent are influnced by the word free</p>
-      <p style="font-weight: bold;">Naive Bayes Assumes (Naively) Indepdence!</p>
+      <p class='basicText'>If the TF-IDF values are not indepdenent it implies that the probablitys of the TF-IDF of urgent are influnced by the word free</p>
+      <p class='basicText', style="font-weight: bold;">Naive Bayes Assumes (Naively) Indepdence!</p>
       <p>TODO ADD VISUALIZATION FOR THIS SPEFIFIC BIT Therefore P(words | class) = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
       <p>Notation $PIP(word i | class)$ = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
     </section>
@@ -333,13 +337,14 @@
     
 
     <section>
-      <h1>Formula Revisted</h1>
-      <p>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
+      <h1 class='headerText'>Formula Revisted</h1>
+      <p class='basicText'>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
       <div class="foreground">
       <BayesViz/>
       </div>
     </section>
     <section>
+    <h1 class='headerText'>Variants</h1>
     <div class="foreground">
       <BayesGauss/>
       <GuassVis/>
@@ -347,7 +352,11 @@
     </section>
 
     <section/>
-    <section>Refrences</section>
+    <section>
+      <h1 class='headerText'>
+      Refrences
+      </h1>
+    </section>
 
   </div>
 </Scroller>
@@ -420,19 +429,33 @@
     width: 43%;
     text-align: center;
     align-items: center;
+    font-size: 18px;
+  }
+
+  .email_examples_headers{
+    position: absolute;
+    margin-left: 31%;
+    margin-right: 25%;
+    width: 43%;
+    text-align: center;
+    align-items: center;
+    font-size: 25px;
   }
 
   .common_words{
     color:black;
+    font-size: 18px;
   }
 
   .common_words.visible{
     color: blue;
     font-weight: bold;
+    font-size: 20px;
   }
 
   .uncommon_words{
     color:black;
+    font-size: 20px;
   }
 
   .uncommon_words.visible{
@@ -453,9 +476,31 @@
     margin-top: auto;
     width: 100%;
     height: max-content;
-    
-    
   }
 
+  .headerText{
+    font-family: 'Montserrat', sans-serif;
+    color: #121212;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    transition: color 0.3s ease;
+    font-size: 40px;
+  }
+
+  .smallerheaderText{
+    font-family: 'Montserrat', sans-serif;
+    color: #121212;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    transition: color 0.3s ease;
+    font-size: 30px;
+  }
+
+  .basicText{
+    font-family: 'Roboto', 'sans-serif';
+    color: #000000;
+    line-height: 1.6;
+    font-size: 17px;
+  }
 </style>
 
