@@ -22,8 +22,16 @@
     const marginRight = 40;
   
     onMount(async () => {
-          width = window.screen.width;
-          height = window.screen.height;
+          width = window.innerWidth
+          height = window.innerHeight
+
+          //https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event
+          window.onresize = function(event) {
+            width = window.innerWidth
+            height = window.innerHeight
+            update_data()
+          };
+
           console.log(width, height)
           allData = await d3.csv(csv_path);
           n = allData.length
