@@ -8,7 +8,11 @@
   import BayesViz from './BayesViz.svelte';
   import BayesGauss from './BayesGauss.svelte'
   import GuassVis from "./GuassVis.svelte";
+
   import Point_Cloud_Demo from "./Point_Cloud_Demo.svelte";
+
+  import MultiplyViz from "./multiplyViz.svelte";
+
 
  
 
@@ -396,11 +400,15 @@
       <p>Notation $PIP(word i | class)$ = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
     </section>
 
-    
+    <section>
+      <div class='foreground'>
+        <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
+        <MultiplyViz/>
+      </div>
+    </section>    
 
     <section>
       <h1 class='headerText'>Formula Revisted</h1>
-      <p class='basicText'>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
       <div class="foreground">
       <BayesViz/>
       </div>
