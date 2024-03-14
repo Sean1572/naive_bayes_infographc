@@ -80,7 +80,7 @@
   let histogram_opacity = 0.0
   let no_prob = false;
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: progress, histogram_opacity  =  0.0 //change_opacity(histogram_opacity) //TODO REVERT
+  $: progress, histogram_opacity  =  change_opacity(histogram_opacity) //TODO REVERT
   $: progress, point_opacity  =  change_opacity(point_opacity, 33, 30)
   $: index, no_prob = index < 15;
 
