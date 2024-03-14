@@ -8,6 +8,7 @@
   import BayesViz from './BayesViz.svelte';
   import BayesGauss from './BayesGauss.svelte'
   import GuassVis from "./GuassVis.svelte";
+  import Point_Cloud_Demo from "./Point_Cloud_Demo.svelte";
 
  
 
@@ -19,7 +20,7 @@
   let its_go_time = false
 
   onMount( async () => { 
-    console.log("hello?")
+ 
     its_go_time = true;
 
   })
@@ -54,7 +55,7 @@
   // }
  
   // As you approch the bounds, it start changing the opacity
-  function change_opacity(opacity, upper_bound=16, lower_bound=13) {
+  function change_opacity(opacity, upper_bound=18, lower_bound=13) {
     if (index > upper_bound) {
       let distance_to_upper = ((upper_bound+1) / count) - progress
       distance_to_upper /= ((upper_bound+1) / count) - ((upper_bound) / count)
@@ -74,8 +75,8 @@
   $: index, email_example_opacity  = index + offset - 0.5 - 6
   $: progress, histogram_opacity  =  change_opacity(histogram_opacity)
   $: index, no_prob = index < 15;
-  $: index, console.log(no_prob)
-  //$: progress, console.log(window.screen)
+
+ 
   
   // let screen_y = 0.0
   // $: progress, screen_y = get_doc_height()*progress
@@ -84,14 +85,16 @@
 </script>
  
 <main>
-  <!-- <div class="test_tidif">
-    <Tidif_hist 
+  <div class="test_tidif">
+    <Point_Cloud_Demo
       bind:word={word}
       bind:no_prob={no_prob} 
       class_name="test_tidif"  
       spam_split={true}/>
-  </div> -->
+  </div>
   
+  
+
   <Scroller
     top={0.0}
     bottom={1}
@@ -164,6 +167,17 @@
           {#if (index >= 16) && (index < 17)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
               Given we know the TF-IDF of a word in an email, the probablity of the email being spam changes
+            </h2>
+          {/if}
+          {#if (index >= 17) && (index < 18)}
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
+              This is the idea of conditional probablity, 
+              based on some knowledge you have such as the tidif of a word like "{word}", then the probablity of spam changes
+            </h2>
+          {/if}
+          {#if (index >= 18) && (index < 19)}
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
+              We denote this P(spam | {word}) or P(ham | {word})
             </h2>
           {/if}
 
@@ -253,6 +267,12 @@
     <section />
     <section />
     <section />
+    <section />
+    <section />
+    <section />
+    <h1 class='headerText'>Given the TIDIF of a word, we can potentially get a good esimate of the probablity its spam</h1>
+    <section />
+    <h1 class='headerText'>But what if we want to use mutliple words to find spam?</h1>
     <section />
     <section>
       <h1 class='headerText'>Formula Baseline</h1>
