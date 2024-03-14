@@ -15,7 +15,7 @@
 
     export let class_name = "";
     export let word = "call";
-  
+    export let index = 0;
     let allData = []; 
     const rect_width = 100;
     let gx;
@@ -66,10 +66,186 @@
     }
 
     //allow for select highlighting
+    let all_flag = true
     let label_flag = false
     let spam_flag = true
-    let range_flag = true
-    let all_flag = false
+    let range_flag = false
+
+    function adjust_highlight() {
+      if (allData.length == 0) {
+          return;
+      }
+      let ham_data = allData.filter(function(d){ 
+        return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] > x_inverse(x_bar)) & (d.label == "ham") })
+      let spam_data = allData.filter(function(d){ 
+        return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] >  x_inverse(x_bar)) & (d.label == "spam") })
+
+
+      const total_spam = allData.filter(function(d){return (d[word] > 0) & (d.label == "spam") }).length
+      const total_ham = allData.filter(function(d){return(d[word] > 0) & (d.label == "ham") }).length
+      const total_points = allData.filter(function(d){return(d[word] > 0)}).length
+      const total_range = allData.filter(function(d){return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] >  x_inverse(x_bar)) &(d[word] > 0)}).length
+      // console.log(x_inverse(x_bar), x_inverse(x_bar +  rect_width), 
+      //   "total spam: ", total_spam,
+      //   "total ham: ", total_ham,
+      //   "total spam in range: ", spam_data.length,
+      //   "total ham in range: ", ham_data.length,
+      //   "total points: ", total_points,
+      //   "points in range: ", total_range,
+      //   "probablity of spam given tidif range = prob in range and prob of spam devided by prob of range",
+      //   "prob in range = #of points in range / #of points = ", total_range/total_points,
+      //   "prob in spam = #of points in spam / #of points = ", total_spam/total_points,
+      //   "prob in spam GIVEN in range = # of points in spam and range / # of points in range = ", spam_data.length/total_range ,
+        
+      //   "this is equal to prob in range and spam / prob in range = ", 
+      //   spam_data.length/total_points, "/", total_range/total_points, "=",
+      //    (spam_data.length/total_points)/(total_range/total_points),
+
+      //    "Now the Probablity of range given spam is therefore = # the number of points in spam and range / # of points in spam",
+      //    spam_data.length/total_points, "/", total_spam/total_points, "=",
+      //    (spam_data.length/total_points)/(total_spam/total_points),
+      //   )
+
+        const svg = d3.select("."+class_name).select("svg")
+        //Program a probablity system with each histogram
+        if (false) {
+          svg.selectAll("text").text("");
+          svg.select("#bar").select("rect").style("opacity", 0.0)
+          return
+        };
+        console.log(svg.select("#PS"))
+        
+
+        // svg.select("#PR")
+        //         .text("Prob of TF-IDF in range, P(R): " + round(total_range/total_points, 2))
+        //         .attr("x", function(d) {return width-250})
+        //         .attr("y", marginTop + 40)
+
+        // svg.select("#PRS")
+        //         .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
+        //         .attr("x", function(d) {return width-385})
+        //         .attr("y", marginTop + 60)
+
+
+        // svg.select("#PSGR")
+        //         .text("Given a TF-IDF range, prob of spam, P(S | R): " + round(spam_data.length/total_range, 2))
+        //         .attr("x", function(d) {return width-350})
+        //         .attr("y", marginTop + 80)
+        
+        // svg.select("#PRGS")
+        //         .text("Given a TF-IDF range, prob of spam, P(R | S): " + round(spam_data.length/total_spam, 2))
+        //         .attr("x", function(d) {return width-350})
+        //         .attr("y", marginTop + 100)
+
+      
+      if (index <= 24) {
+        svg.selectAll("text").text("");
+        all_flag = true
+      }
+      if (index > 24) {
+        svg.selectAll("text").text("");
+        all_flag = false;
+        spam_flag = true; 
+        range_flag = false;
+        svg.select("#PR")
+                .text("Prob of spam, P(S): " + round(total_spam/total_points, 2))
+                .attr("x", function(d) {return width-250})
+                .attr("y", marginTop + 40)
+      }
+      if (index > 25) {
+        svg.selectAll("text").text("");
+        range_flag = true; 
+        spam_flag=false;
+        svg.select("#PR")
+                .text("Prob of TF-IDF in range, P(R): " + round(total_range/total_points, 2))
+                .attr("x", function(d) {return width-250})
+                .attr("y", marginTop + 40)
+      }
+      if (index > 26) {
+        svg.selectAll("text").text("");
+        range_flag = true; 
+        spam_flag=true;
+        svg.select("#PR")
+                .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
+                .attr("x", function(d) {return width-385})
+                .attr("y", marginTop + 40)
+
+      }
+
+      //pause for a second to explain conditional probablity
+
+      //Reveal conditional probablities
+      if (index > 28) {
+        svg.selectAll("text").text("");
+        range_flag = true; 
+        spam_flag=true;
+        svg.select("#PR")
+                .text("Prob of spam, P(S): " + round(total_spam/total_points, 2))
+                .attr("x", function(d) {return width-250})
+                .attr("y", marginTop + 40)
+
+        svg.select("#PRS")
+                .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
+                .attr("x", function(d) {return width-385})
+                .attr("y", marginTop + 60)
+
+
+        svg.select("#PSGR")
+                .text("Given a TF-IDF range, prob of spam, P(R | S): " + round(spam_data.length/total_spam, 2))
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 80)
+
+        svg.select("#PRGS")
+                .text(
+                  "P(R | S) = P(S and R) / P(S) = "
+                  + round(spam_data.length/total_points, 2) + " / " 
+                  + round(total_spam/total_points, 2) + " = " 
+                  + round(spam_data.length/total_spam, 2)
+                  )
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 100)
+
+
+      }
+      if (index > 30) {
+        svg.selectAll("text").text("");
+        range_flag = true; 
+        spam_flag=true;
+        svg.select("#PR")
+                .text("Prob of TF-IDF in range, P(R): " + round(total_range/total_points, 2))
+                .attr("x", function(d) {return width-250})
+                .attr("y", marginTop + 40)
+
+        svg.select("#PRS")
+                .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
+                .attr("x", function(d) {return width-385})
+                .attr("y", marginTop + 60)
+
+
+        svg.select("#PSGR")
+                .text("Given a TF-IDF range, prob of spam, P(S | R): " + round(spam_data.length/total_range, 2))
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 80)
+
+        svg.select("#PRGS")
+                .text(
+                  "P(S | R) = P(S and R) / P(R) = "
+                  + round(spam_data.length/total_points, 2) + " / " 
+                  + round(total_range/total_points, 2) + " = " 
+                  + round(spam_data.length/total_range, 2)
+                  )
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 100)
+
+
+      }
+      console.log(all_flag, label_flag, spam_flag, range_flag)
+      
+      update_data();
+    }
+   
+    
+
     function select_points(d) {
       return (
           ((d[word] < x_inverse(x_bar +  rect_width)) || !range_flag) 
@@ -104,7 +280,7 @@
           return d
       })
       console.log(data[0]["bin_height"], data[0][word])
-
+      console.log(svg)
       const jitterWidth = 1.5
       svg
           .selectAll("circle")
@@ -206,73 +382,12 @@
             d3.select(this).style("stroke",  "red")
           })
           .transition().duration(800).style("opacity", 0.5);
-
-
-      
-
-
-      let ham_data = allData.filter(function(d){ 
-        return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] > x_inverse(x_bar)) & (d.label == "ham") })
-      let spam_data = allData.filter(function(d){ 
-        return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] >  x_inverse(x_bar)) & (d.label == "spam") })
-
-
-      const total_spam = allData.filter(function(d){return (d[word] > 0) & (d.label == "spam") }).length
-      const total_ham = allData.filter(function(d){return(d[word] > 0) & (d.label == "ham") }).length
-      const total_points = allData.filter(function(d){return(d[word] > 0)}).length
-      const total_range = allData.filter(function(d){return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] >  x_inverse(x_bar)) &(d[word] > 0)}).length
-      // console.log(x_inverse(x_bar), x_inverse(x_bar +  rect_width), 
-      //   "total spam: ", total_spam,
-      //   "total ham: ", total_ham,
-      //   "total spam in range: ", spam_data.length,
-      //   "total ham in range: ", ham_data.length,
-      //   "total points: ", total_points,
-      //   "points in range: ", total_range,
-      //   "probablity of spam given tidif range = prob in range and prob of spam devided by prob of range",
-      //   "prob in range = #of points in range / #of points = ", total_range/total_points,
-      //   "prob in spam = #of points in spam / #of points = ", total_spam/total_points,
-      //   "prob in spam GIVEN in range = # of points in spam and range / # of points in range = ", spam_data.length/total_range ,
-        
-      //   "this is equal to prob in range and spam / prob in range = ", 
-      //   spam_data.length/total_points, "/", total_range/total_points, "=",
-      //    (spam_data.length/total_points)/(total_range/total_points),
-
-      //    "Now the Probablity of range given spam is therefore = # the number of points in spam and range / # of points in spam",
-      //    spam_data.length/total_points, "/", total_spam/total_points, "=",
-      //    (spam_data.length/total_points)/(total_spam/total_points),
-      //   )
-
-
-        console.log(svg.select("#PS"))
-        svg.select("#PS")
-            .text("Prob of Spam, P(S): " + round(total_spam/total_points, 2))
-            .attr("x", function(d) {return width-180})
-            .attr("y", marginTop + 20)
-
-        svg.select("#PR")
-                .text("Prob of TF-IDF in range, P(R): " + round(total_range/total_points, 2))
-                .attr("x", function(d) {return width-250})
-                .attr("y", marginTop + 40)
-
-        svg.select("#PRS")
-                .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
-                .attr("x", function(d) {return width-385})
-                .attr("y", marginTop + 60)
-
-
-        svg.select("#PSGR")
-                .text("Given a TF-IDF range, prob of spam, P(S | R): " + round(spam_data.length/total_range, 2))
-                .attr("x", function(d) {return width-350})
-                .attr("y", marginTop + 80)
-        
-        svg.select("#PRGS")
-                .text("Given a TF-IDF range, prob of spam, P(R | S): " + round(spam_data.length/total_spam, 2))
-                .attr("x", function(d) {return width-350})
-                .attr("y", marginTop + 100)
         }
 
     $: word, update_data();
-    $: x_bar, update_data()
+    $: x_bar, adjust_highlight();
+    $: index, adjust_highlight();
+    $: index, console.log(index)
     
     
   </script>
