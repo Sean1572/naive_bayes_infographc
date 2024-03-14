@@ -17,7 +17,7 @@
     export let word = "call";
   
     let allData = []; 
-    
+    const rect_width = 100;
     let gx;
     let gy;
     let x = null;
@@ -63,6 +63,23 @@
     //javascript why
     function round(x, position) {
       return Math.round(x*(10**position))/(10**position)
+    }
+
+    //allow for select highlighting
+    let label_flag = false
+    let spam_flag = true
+    let range_flag = true
+    let all_flag = false
+    function select_points(d) {
+      return (
+          ((d[word] < x_inverse(x_bar +  rect_width)) || !range_flag) 
+        ) & (
+          (d[word] > x_inverse(x_bar) || !range_flag)
+        ) & (
+          (d.label == "ham") || !label_flag
+        ) & (
+          (d.label == "spam") || !spam_flag
+        ) || all_flag
     }
 
   
@@ -113,26 +130,25 @@
                 }
             })
             .attr("stroke", "white")
-            .transition()
-            .duration(800)
-            .attr("opacity", 1.0)
+            
+            .attr("opacity", function(d) {
+              if (select_points(d)){
+                return 1
+              } else {
+                return 0.2
+              }
+            })
+            
         },
         function(update) {
-            return update.transition()
-              .duration(800)
-              .attr("cx", function(d){return(x(d[word]))})
-              .attr("cy", function(d){
-                let random_move =  (Math.random() * 2 - 1)
-                let offset = y.bandwidth()/2
-                let init = y(d.label) + offset - (random_move*d.bin_height)
-                return init  + 40
-              }).style("fill", function(d){
-                      if(d.label == "spam") {
-                        return "orange"
-                      } else {
-                        return "blue"
-                      }
-                  });
+            return update
+            .attr("opacity", function(d) {
+              if (select_points(d)){
+                return 1
+              } else {
+                return 0.2
+              }
+            });
         },
         function(exit) {
           console.log(exit)
@@ -142,6 +158,8 @@
             .remove();
         }
       )
+
+      update_prob()
     }
 
     function update_prob() {
@@ -156,7 +174,7 @@
         return
       };
 
-      const rect_width = 100;
+
       //https://d3js.org/d3-drag  
       
       //TODO CREATE SWAP LOGIC!!!
@@ -188,6 +206,9 @@
             d3.select(this).style("stroke",  "red")
           })
           .transition().duration(800).style("opacity", 0.5);
+
+
+      
 
 
       let ham_data = allData.filter(function(d){ 
@@ -251,7 +272,7 @@
         }
 
     $: word, update_data();
-    $: x_bar, update_prob()
+    $: x_bar, update_data()
     
     
   </script>
