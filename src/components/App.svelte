@@ -338,7 +338,6 @@
 
     <section>
       <h1 class='headerText'>Formula Revisted</h1>
-      <p class='basicText'>P(spam | words) = P(spam) * P(words | spam)/p(words)</p>
       <div class="foreground">
       <BayesViz/>
       </div>
