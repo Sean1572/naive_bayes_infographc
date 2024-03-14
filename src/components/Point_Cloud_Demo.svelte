@@ -200,27 +200,55 @@
       const total_ham = allData.filter(function(d){return(d[word] > 0) & (d.label == "ham") }).length
       const total_points = allData.filter(function(d){return(d[word] > 0)}).length
       const total_range = allData.filter(function(d){return (d[word] < x_inverse(x_bar +  rect_width)) & (d[word] >  x_inverse(x_bar)) &(d[word] > 0)}).length
-      console.log(x_inverse(x_bar), x_inverse(x_bar +  rect_width), 
-        "total spam: ", total_spam,
-        "total ham: ", total_ham,
-        "total spam in range: ", spam_data.length,
-        "total ham in range: ", ham_data.length,
-        "total points: ", total_points,
-        "points in range: ", total_range,
-        "probablity of spam given tidif range = prob in range and prob of spam devided by prob of range",
-        "prob in range = #of points in range / #of points = ", total_range/total_points,
-        "prob in spam = #of points in spam / #of points = ", total_spam/total_points,
-        "prob in spam GIVEN in range = # of points in spam and range / # of points in range = ", spam_data.length/total_range ,
+      // console.log(x_inverse(x_bar), x_inverse(x_bar +  rect_width), 
+      //   "total spam: ", total_spam,
+      //   "total ham: ", total_ham,
+      //   "total spam in range: ", spam_data.length,
+      //   "total ham in range: ", ham_data.length,
+      //   "total points: ", total_points,
+      //   "points in range: ", total_range,
+      //   "probablity of spam given tidif range = prob in range and prob of spam devided by prob of range",
+      //   "prob in range = #of points in range / #of points = ", total_range/total_points,
+      //   "prob in spam = #of points in spam / #of points = ", total_spam/total_points,
+      //   "prob in spam GIVEN in range = # of points in spam and range / # of points in range = ", spam_data.length/total_range ,
         
-        "this is equal to prob in range and spam / prob in range = ", 
-        spam_data.length/total_points, "/", total_range/total_points, "=",
-         (spam_data.length/total_points)/(total_range/total_points),
+      //   "this is equal to prob in range and spam / prob in range = ", 
+      //   spam_data.length/total_points, "/", total_range/total_points, "=",
+      //    (spam_data.length/total_points)/(total_range/total_points),
 
-         "Now the Probablity of range given spam is therefore = # the number of points in spam and range / # of points in spam",
-         spam_data.length/total_points, "/", total_spam/total_points, "=",
-         (spam_data.length/total_points)/(total_spam/total_points),
-        )
-    }
+      //    "Now the Probablity of range given spam is therefore = # the number of points in spam and range / # of points in spam",
+      //    spam_data.length/total_points, "/", total_spam/total_points, "=",
+      //    (spam_data.length/total_points)/(total_spam/total_points),
+      //   )
+
+
+        console.log(svg.select("#PS"))
+        svg.select("#PS")
+            .text("Prob of Spam, P(S): " + round(total_spam/total_points, 2))
+            .attr("x", function(d) {return width-180})
+            .attr("y", marginTop + 20)
+
+        svg.select("#PR")
+                .text("Prob of TF-IDF in range, P(R): " + round(total_range/total_points, 2))
+                .attr("x", function(d) {return width-250})
+                .attr("y", marginTop + 40)
+
+        svg.select("#PRS")
+                .text("A text has a TF-IDF in range and spam, P(R and S): " + round(spam_data.length/total_points, 2))
+                .attr("x", function(d) {return width-385})
+                .attr("y", marginTop + 60)
+
+
+        svg.select("#PSGR")
+                .text("Given a TF-IDF range, prob of spam, P(S | R): " + round(spam_data.length/total_range, 2))
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 80)
+        
+        svg.select("#PRGS")
+                .text("Given a TF-IDF range, prob of spam, P(R | S): " + round(spam_data.length/total_spam, 2))
+                .attr("x", function(d) {return width-350})
+                .attr("y", marginTop + 100)
+        }
 
     $: word, update_data();
     $: x_bar, update_prob()
@@ -253,10 +281,11 @@
 
             <g id="bar">
               <rect/>
-              <text id="right_spam"></text>
-              <text id="left_spam"></text>
-              <text id="right_ham"></text>
-              <text id="left_ham"></text>
+              <text id="PS"></text>
+              <text id="PR"></text>
+              <text id="PRS"></text>
+              <text id="PSGR"></text>
+              <text id="PRGS"></text>
             </g>
             
     </svg>
