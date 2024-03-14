@@ -5,13 +5,14 @@
   export let spam_split = true;
   export let no_prob = true;
   export let class_name = "";
+  export let word = "call";
 
   let allData = []; 
   let svg;
   let bins;
   let bins_spam;
   let bins_ham;
-  let word = "call";
+  
   let histogram = null;
   let gx;
   let gy;
@@ -41,7 +42,7 @@
       .range([0, 1]);
 
   $: y = d3.scaleLinear()
-      .domain([0.05, 0])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .domain([100, 0])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
       .range([0 , height - marginTop - marginBottom]);
   
 
@@ -75,9 +76,9 @@
             return enter
             .append("rect")
               .attr("x", function(d) {return x(d.x0) + marginLeft;})
-              .attr("y", function(d) {return y(d.length/n) + marginBottom})
+              .attr("y", function(d) {return y(d.length) + marginBottom})
               .attr("width", function(d) { return x(d.x1) - x(d.x0) -1; })
-              .attr("height", function(d) { return height - y(d.length/n) - marginBottom - marginTop; })
+              .attr("height", function(d) { return height - y(d.length) - marginBottom - marginTop; })
               .style("fill", fill_color)
               .style("opacity", 0.5);
           },
@@ -92,8 +93,8 @@
           }
         ).transition()
           .duration(800)
-          .attr("y", function(d) {return y(d.length/n) + marginBottom})
-          .attr("height", function(d) { return height - y(d.length/n) - marginBottom - marginTop; })
+          .attr("y", function(d) {return y(d.length) + marginBottom})
+          .attr("height", function(d) { return height - y(d.length) - marginBottom - marginTop; })
     }
 
   function update_data() {
@@ -219,7 +220,7 @@
   $: x_bar, update_data()
   $: word, update_data();
   $: no_prob, update_data();
-  $: no_prob, console.log("updated no_prob ", no_prob, class_name)
+
   
   
 </script>

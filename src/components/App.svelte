@@ -8,7 +8,11 @@
   import BayesViz from './BayesViz.svelte';
   import BayesGauss from './BayesGauss.svelte'
   import GuassVis from "./GuassVis.svelte";
+
+  import Point_Cloud_Demo from "./Point_Cloud_Demo.svelte";
+
   import MultiplyViz from "./multiplyViz.svelte";
+
 
  
 
@@ -20,7 +24,7 @@
   let its_go_time = false
 
   onMount( async () => { 
-    console.log("hello?")
+ 
     its_go_time = true;
 
   })
@@ -55,13 +59,15 @@
   // }
  
   // As you approch the bounds, it start changing the opacity
-  function change_opacity(opacity, upper_bound=16, lower_bound=13) {
+  function change_opacity(opacity, upper_bound=18, lower_bound=13) {
+    
     if (index > upper_bound) {
-      let distance_to_upper = ((upper_bound+1) / count) - progress
-      distance_to_upper /= ((upper_bound+1) / count) - ((upper_bound) / count)
-      return Math.max(distance_to_upper + 0.5, 0)
+      let distance_to_upper = progress - ((upper_bound+1) / count) 
+
+      return Math.max(1 - distance_to_upper * 8 + 0.5, 0)
     }
     else if (index < lower_bound) {
+      //console.log(lower_bound, progress, (lower_bound-1) / count)
       let distance_to_lower = progress  - ((lower_bound-1) / count)
       distance_to_lower /= ((lower_bound) / count) - ((lower_bound-1) / count) 
       return Math.max(distance_to_lower + 0.5, 0) //Seemed needed to fix timing, maybe offset for index?
@@ -70,13 +76,15 @@
     }
   }
   let email_example_opacity = 0.3
+  let point_opacity = 0.0
   let histogram_opacity = 0.0
   let no_prob = false;
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: progress, histogram_opacity  =  change_opacity(histogram_opacity)
+  $: progress, histogram_opacity  =  0.0 //change_opacity(histogram_opacity) //TODO REVERT
+  $: progress, point_opacity  =  change_opacity(point_opacity, 33, 30)
   $: index, no_prob = index < 15;
-  $: index, console.log(no_prob)
-  //$: progress, console.log(window.screen)
+
+ 
   
   // let screen_y = 0.0
   // $: progress, screen_y = get_doc_height()*progress
@@ -86,13 +94,15 @@
  
 <main>
   <!-- <div class="test_tidif">
-    <Tidif_hist 
+    <Point_Cloud_Demo
       bind:word={word}
       bind:no_prob={no_prob} 
       class_name="test_tidif"  
       spam_split={true}/>
   </div> -->
   
+  
+
   <Scroller
     top={0.0}
     bottom={1}
@@ -167,6 +177,17 @@
               Given we know the TF-IDF of a word in an email, the probablity of the email being spam changes
             </h2>
           {/if}
+          {#if (index >= 17) && (index < 18)}
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
+              This is the idea of conditional probablity, 
+              based on some knowledge you have such as the tidif of a word like "{word}", then the probablity of spam changes
+            </h2>
+          {/if}
+          {#if (index >= 18) && (index < 19)}
+            <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
+              We denote this P(spam | {word}) or P(ham | {word})
+            </h2>
+          {/if}
 
 
 
@@ -220,9 +241,24 @@
 
         <div 
           class="interactables-histogram-a"
-          style="opacity: {histogram_opacity}"
+          style="opacity: {histogram_opacity}; z-index: 0;"
         >
           <Tidif_hist bind:no_prob={no_prob}  bind:word={word} class_name="interactables-histogram-a"/>
+        </div>
+
+        <div 
+          class="interactables-histogram-a"
+          style="opacity: {point_opacity}; z-index: 1;"
+        >
+            <div class="point_cloud">
+              <Point_Cloud_Demo
+                bind:word={word}
+                bind:index={index} 
+                class_name="point_cloud"
+                spam_split={true}
+                />
+              <p>Click and drag the red region, we can compute probablities in that region</p>
+          </div>
         </div>
       <!-- {/if} -->
   
@@ -255,6 +291,36 @@
     <section />
     <section />
     <section />
+    <section />
+    <section />
+    <h1 class='headerText'>Given the TIDIF of a word, we can potentially get a good esimate of the probablity its spam</h1>
+    <section />
+    <h1 class='headerText'>But what if we want to use mutliple words to find spam?</h1>
+    <section />
+    <h1 class='headerText'>Lets dive a bit deerper into how we compute probabablies</h1>
+  
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section />
+  <section>
+    
     <section>
       <h1 class='headerText'>Formula Baseline</h1>
       <p class='basicText'> Conditional probablities: Given some information, the probabaltiy of an event changes. </p>
@@ -270,8 +336,7 @@
 
       
 
-     </section>
-     <section>
+     
       <p class='basicText'> 
         P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam?
       </p>
