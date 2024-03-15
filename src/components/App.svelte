@@ -64,7 +64,7 @@
     if (index > upper_bound) {
       let distance_to_upper = progress - ((upper_bound+1) / count) 
 
-      return Math.max(1 - distance_to_upper * 8 + 0.5, 0)
+      return Math.max(1 - distance_to_upper * 20, 0)
     }
     else if (index < lower_bound) {
       //console.log(lower_bound, progress, (lower_bound-1) / count)
@@ -80,8 +80,8 @@
   let histogram_opacity = 0.0
   let no_prob = false;
   $: index, email_example_opacity  = index + offset - 0.5 - 6
-  $: progress, histogram_opacity  =  change_opacity(histogram_opacity) //TODO REVERT
-  $: progress, point_opacity  =  change_opacity(point_opacity, 33, 30)
+  $: progress, histogram_opacity  =  change_opacity(histogram_opacity, 18, 14) //TODO REVERT
+  $: progress, point_opacity  =  change_opacity(point_opacity, 31, 23)
   $: index, no_prob = index < 15;
 
  
@@ -249,7 +249,26 @@
         <div 
           class="interactables-histogram-a"
           style="opacity: {point_opacity}; z-index: 1;"
-        >
+        > 
+            {#if (index <= 24) & (index > 22)}
+            <h2> This visualization shows the same TF-IDF data but instead each email is plotted on this table</h2>
+            {/if}
+            {#if (index <= 25) & (index > 24)}
+            <h2> Frist we can compuate the probablity of any email being spam as the number of spam emails devided by total emails</h2>
+            {/if}
+            {#if (index <= 26) & (index > 25)}
+            <h2> We can also compute the probablity of if a given word in an email has a TF-IDF value in a given range (Move the red bar around to change the probablity!)</h2>
+            {/if}
+            {#if (index <= 27) & (index > 26)}
+            <h2> Finally we can see what probablity of emails is both spam and in range (try moving the bar to where there are a lot of spam emails)</h2>
+            {/if}
+            {#if (index <= 30) & (index > 28)}
+            <h2> We can also compute conditional probablity for spam emails given some TF-IDF range</h2>
+            {/if}
+            {#if (index <= 32) & (index > 30)}
+            <h2> We can also do the reverse: Given the email is spam, what is the probablity it is in the red range?</h2>
+            {/if}
+            
             <div class="point_cloud">
               <Point_Cloud_Demo
                 bind:word={word}
@@ -311,74 +330,22 @@
   <section />
   <section />
   <section />
-  <section />
-  <section />
-  <section />
-  <section />
-  <section />
-  <section />
-  <section />
-  <section />
-  <section>
+
     
     <section>
-      <h1 class='headerText'>Formula Baseline</h1>
-      <p class='basicText'> Conditional probablities: Given some information, the probabaltiy of an event changes. </p>
-
-      <p class='basicText'> 
-        But what happens if we want to consider more than one word? 
-      </p>
+      <h1 class='headerText'>Bayes Rule</h1>
+      <p class='basicText'> We have shown that $P(S|R) = P(S \cup R)/P(R)$ and $P(R|S) = P(S \cup R)/P(S)$ </p>
+      <p class='basicText'> Notice they both have $P(S \cup R)$ in the equation! </p>
+      <p class='basicText'> We can therefore rewrite it to make them equal each other! </p>
       <p class='basicText'>
-        How do we compute the probablity of spam given the tidifs of a collection of words?
-      </p>
+         $$P(R|S) = P(S \cup R)/P(S) \rightarrow P(R|S)P(S)= P(S \cup R)$$ 
+         $$P(S|R) = P(S \cup R)/P(R) \rightarrow P(S|R) = P(R|S)P(S)/P(R)$$
+
+          This is known as bayes theroem, it means we can compute $P(S|R)$ by instead sloving for $P(R|S)P(S)/P(R)$. 
+          
+          And the best part is this allows us to consider the probablity of spam given the TF-IDF ranges of mutliple words!
       
-      
-
-      
-
-     
-      <p class='basicText'> 
-        P(class=spam | word_tf-idf=x) = P(spam | words): given a list of TF-IDF values from words, what is the probablity of the class being spam?
-      </p>
-      <img src="Thomas_Bayes.gif">
-      <p class='basicText'> 
-        SOLUTION: BAYES THEOREM
-      </p>
-      <p class='basicText'>
-        P(spam | words) = P(spam) * P(words | spam)/p(words):
-      </p>
-      <p class='basicText'> 
-        Lets break this down!
-      </p>
-    </section>
-      <section>
-
-     
-      <h1 class='smallerheaderText'>P(spam) = # spam / total emails</h1>
-
-      {#if (index > 10)}
-        <div class="spam_prob" style="width: 60%; margin: auto;">
-        <EmailCloud 
-          frame={1} 
-          csv_path="spam_probablity.csv", 
-          exit_opacity={1.0},
-          custom_class="spam_prob"/>
-        </div>
-      {/if}
-      
-      <p class='basicText'>How likely is the class to exist?</p>
-
-      <h1 class='smallerheaderText'>P(words) = frequency of the obsreved TF-IDF for each word</h1>
-
-      <div 
-        class="interactables-histogram-b"
-       
-      >
-        <Tidif_hist bind:word={word} class_name="interactables-histogram-b"  spam_split={false}/>
-      </div>
-     
-    </section>
-    <section>
+      </p>     
     </section>
     <h1 class='headerText'> P(words | class) </h1>
       <img src="conditional_explaination_2.png">
