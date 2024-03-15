@@ -101,7 +101,7 @@
       spam_split={true}/>
   </div> -->
   
-  
+  {`$$x = \\frac{t}{3}$$`}
 
   <Scroller
     top={0.0}
