@@ -87,7 +87,51 @@
   $: index, no_prob = index < 15;
 
  
-  
+  // Z Index Handler
+  // recall larger value -> higher up
+  let interactions = {
+    "tf-idf histogram": 0,
+    "tf-idf point cloud": 0,
+    "pop up": 0,
+    "rest of foreground": 1
+  }
+
+  function change_interactions(index, bayes_cond_enable=false)  {
+      interactions = {
+        "tf-idf histogram": 0,
+        "tf-idf point cloud": 0,
+        "pop up": 0,
+        "rest of foreground": 1
+      }
+    if ((index <= 22) & (index > 12)) {
+      interactions["tf-idf histogram"] = 100
+    } else {
+      interactions["tf-idf histogram"] = 0
+    }
+
+    if ((index <= 32) & (index > 22)) {
+      interactions["tf-idf point cloud"] = 100
+    } else {
+      interactions["tf-idf point cloud"] = 0
+    }
+
+    if (!bayes_cond_enable)
+      showBayesViz = (index <= 29) & (index > 28)
+
+    if (showBayesViz) {
+      interactions["pop up"] = 100
+    } else {
+      interactions["pop up"] = 0
+    }
+
+
+    console.log(index, interactions)
+  }
+
+  $: index, change_interactions(index);
+  $: showBayesViz, change_interactions(index, true);
+
+
   // let screen_y = 0.0
   // $: progress, screen_y = get_doc_height()*progress
     //<p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
@@ -243,14 +287,14 @@
 
         <div 
           class="interactables-histogram-a"
-          style="opacity: {histogram_opacity}; z-index: 0;"
+          style="opacity: {histogram_opacity}; z-index: {interactions["tf-idf histogram"]};"
         >
           <Tidif_hist bind:no_prob={no_prob}  bind:word={word} class_name="interactables-histogram-a"/>
         </div>
 
         <div 
           class="interactables-histogram-a"
-          style="opacity: {point_opacity}; z-index: 1;"
+          style="opacity: {point_opacity}; z-index: {interactions["tf-idf point cloud"]};"
         > 
             {#if (index <= 24) & (index > 22)}
             <h2> This visualization shows the same TF-IDF data but instead each email is plotted on this table</h2>
@@ -275,7 +319,7 @@
 
               <button on:click="{() => showBayesViz = true}">Show BayesViz</button>
               {#if showBayesViz}
-              <div class="bayesVizPopup">
+              <div class="bayesVizPopup" style="z-index: {interactions["pop up"]};">
                 <BayesViz />
                 <button on:click="{() => showBayesViz = false}">Close</button>
               </div>
@@ -294,7 +338,7 @@
       <!-- {/if} -->
   
     
-    
+    <div class="Foreground Sections!", style="z-index: {interactions["rest of foreground"]};">
     <section>
       <h1 class='headerText'>We get a lot of emails</h1>
 
@@ -359,11 +403,6 @@
       
       </p>     
     </section>
-    <h1 class='headerText'> P(words | class) </h1>
-      <img src="conditional_explaination_2.png">
-      <p class='basicText'>Knowing what the class is changes the probablity we would see the word.</p>
-      <p class='basicText'>This, however, allows us to expand this to consider the probablity of more than one word!</p>
-
       <section>
         <h1 class='headerText'> Aside Indepdence </h1>
       <img src="no_indepedence.gif">
@@ -400,7 +439,7 @@
       Refrences
       </h1>
     </section>
-
+  </div>
   </div>
 </Scroller>
 </main>
