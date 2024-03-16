@@ -3,10 +3,13 @@
   import * as d3 from 'd3';
 
   let svg;
+  let data_to_chart = [];
   let selectedWords = ["", "", ""];
+  let selectedRange = [-1, -1, -1];
   let naiveBayesResult = { spam: 0, ham: 0 };
 
-  const data = [
+  let ranges = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  let words = [
     { word: 'ok', spamProbability: 0.0120, hamProbability: 0.9880 },
     { word: 'just', spamProbability: 0.1329, hamProbability: 0.8671 },
     { word: 'ur', spamProbability: 0.4173, hamProbability: 0.5827 },
@@ -29,7 +32,15 @@
     { word: '16', spamProbability: 0.9392, hamProbability: 0.0608 }
   ];
 
-  onMount(() => {
+  let data = null;
+  
+  //needed by histogram binning
+  $: x = d3.scaleLinear()
+      .domain([0, 1])     
+      .range([0, 1]);
+
+  onMount(async () => {
+    data = await d3.csv("tidif_counts.csv");
     createChart();
   });
 
@@ -52,16 +63,66 @@
     updateChart();
   }
 
+  function handleRangeChange(event, index) {
+    selectedRange[index] = parseInt(event.target.value)
+    calculateNaiveBayes();
+    updateChart();
+  }
+
   function calculateNaiveBayes() {
     let p_words_given_spam = 1;
     let p_words_given_ham = 1;
     let selectedWordsFiltered = selectedWords.filter(word => word !== "");
 
-    selectedWordsFiltered.forEach(word => {
-      const wordData = data.find(d => d.word === word);
-      p_words_given_spam *= wordData.spamProbability;
-      p_words_given_ham *= wordData.hamProbability;
+    console.log("fliter", selectedWordsFiltered)
+    data_to_chart = selectedWordsFiltered.map((word, index) => {
+      console.log(word)
+
+      if (word == "") return ;
+
+      if (selectedRange[index] == -1) {
+        const wordData = words.find(d => d.word === word);
+        console.log(wordData)
+        p_words_given_spam *= wordData["spamProbability"];
+        p_words_given_ham *= wordData["spamProbability"];
+        console.log("success")
+        return {
+          "word": word, 
+          "spamProbability": wordData["spamProbability"], 
+          "hamProbability": wordData["spamProbability"]
+        };
+      }
+      
+
+      let bin_data = data.filter(function(d){ return (d[word] > 0)})
+
+      let histogram = d3.histogram()
+        .value(function(d) { return d[word]; })   
+        .domain(x.domain())  
+        .thresholds(x.ticks(10));
+
+      let emails_in_range = histogram(bin_data)[selectedRange[index]]
+      let total_range = emails_in_range.length
+      let total_spam_in_range = emails_in_range.filter(function(d){ return (d.label == "spam")}).length
+      let total_ham_in_range = emails_in_range.filter(function(d){ return (d.label == "ham")}).length
+      
+      
+      p_words_given_spam *= total_spam_in_range/total_range;
+      p_words_given_ham *= total_ham_in_range/total_range;
+
+      console.log("range selected", total_ham_in_range, {
+          "word": word, 
+          "spamProbability":  total_spam_in_range/total_range, 
+          "hamProbability": total_ham_in_range/total_range
+        })
+      return {
+          "word": word, 
+          "spamProbability":  total_spam_in_range/total_range, 
+          "hamProbability": total_ham_in_range/total_range
+        };
     });
+
+    console.log("data to chart" , data_to_chart)
 
     const total = p_words_given_spam + p_words_given_ham;
     naiveBayesResult.spam = p_words_given_spam / total;
@@ -83,10 +144,7 @@
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // probability processing
-    let chartData = selectedWords.filter(word => word).map(word => {
-        let { spamProbability, hamProbability } = data.find(d => d.word === word);
-        return { word, spamProbability, hamProbability };
-    });
+    let chartData = data_to_chart
 
     // naive bayes results 
     chartData.push({
@@ -139,6 +197,12 @@
              .attr("fill", "#1b9e77");
 }
 
+//https://stackoverflow.com/questions/68992663/d3-round-number-from-nest-and-sum
+//javascript why
+function round(x, position) {
+  return Math.round(x*(10**position))/(10**position)
+}
+
 </script>
 
 <div class="word-selectors">
@@ -147,8 +211,21 @@
       <label for={`word-select-${index}`}>Word {index + 1}:</label>
       <select id={`word-select-${index}`} on:change={event => handleWordChange(event, index)}>
         <option value="">...</option>
-        {#each data as { word }}
+        {#each words as { word }}
           <option value="{word}">{word}</option>
+        {/each}
+      </select>
+    </div>
+  {/each}
+</div>
+<div class="word-selectors">
+  {#each selectedWords as _, index}
+    <div>
+      <label for={`word-select-${index}-range`}>range for Word {index + 1}:</label>
+      <select id={`word-select-${index}-range`} on:change={event => handleRangeChange(event, index)}>
+        <option value="">no range</option>
+        {#each ranges as range }
+          <option value={range}>{round(range * 0.1, 1)} - {round((range + 1) * 0.1, 1)}</option>
         {/each}
       </select>
     </div>
