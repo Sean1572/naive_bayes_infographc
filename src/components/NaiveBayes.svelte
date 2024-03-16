@@ -74,18 +74,18 @@
     let p_words_given_ham = 1;
     let selectedWordsFiltered = selectedWords.filter(word => word !== "");
 
-    console.log("fliter", selectedWordsFiltered)
+    
     data_to_chart = selectedWordsFiltered.map((word, index) => {
-      console.log(word)
+      
 
       if (word == "") return ;
 
       if (selectedRange[index] == -1) {
         const wordData = words.find(d => d.word === word);
-        console.log(wordData)
+       
         p_words_given_spam *= wordData["spamProbability"];
         p_words_given_ham *= wordData["spamProbability"];
-        console.log("success")
+        
         return {
           "word": word, 
           "spamProbability": wordData["spamProbability"], 
@@ -110,11 +110,7 @@
       p_words_given_spam *= total_spam_in_range/total_range;
       p_words_given_ham *= total_ham_in_range/total_range;
 
-      console.log("range selected", total_ham_in_range, {
-          "word": word, 
-          "spamProbability":  total_spam_in_range/total_range, 
-          "hamProbability": total_ham_in_range/total_range
-        })
+
       return {
           "word": word, 
           "spamProbability":  total_spam_in_range/total_range, 
@@ -122,7 +118,7 @@
         };
     });
 
-    console.log("data to chart" , data_to_chart)
+   
 
     const total = p_words_given_spam + p_words_given_ham;
     naiveBayesResult.spam = p_words_given_spam / total;

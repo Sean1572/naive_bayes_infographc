@@ -83,7 +83,7 @@
   $: progress, point_opacity  =  change_opacity(point_opacity, 31, 23)
   $: index, no_prob = index < 15;
 
- 
+  
   // Z Index Handler
   // recall larger value -> higher up
   let interactions = {
@@ -122,11 +122,25 @@
     }
 
 
-    console.log(index, interactions)
+    
   }
 
   $: index, change_interactions(index);
   $: showBayesViz, change_interactions(index, true);
+
+
+  //handle start popup disappearance
+  let popup_class = "hide_issues temp"
+  async function  hide_popup() {
+    //https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+    await new Promise(r => setTimeout(r, 2000));
+    
+    if (index !== undefined) {
+      popup_class = popup_class.replace("temp", "hide")
+    }
+    
+  }
+  $: index, hide_popup() 
 
 
   // let screen_y = 0.0
@@ -134,8 +148,14 @@
     //<p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
     //<p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
 </script>
- 
 <main>
+  
+  
+  <div class={popup_class}>
+    <h1 class="headerText" style="top: 45%; position: relative;"> 
+      Please wait while site loads! Thank you for your time! </h1>
+  </div>
+  
   <!-- <div class="test_tidif">
     <Point_Cloud_Demo
       bind:word={word}
@@ -460,7 +480,7 @@
 
       So lets implement Naive Bayes!
     </p>
-      <div class="foreground">
+      <div class="foreground" style="width: 100%;">
         <NaiveBayes/>
         <p class='basicText'> After calculations, Naive Bayes simply predicts the class with a higher probability!</p>
       </div>
@@ -663,6 +683,29 @@
     position: relative;
     left: 0;
     width: 100%;
+  }
+
+  .hide_issues {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    /* align-items: center; */
+    z-index: 100;
+    opacity: 100;
+    background: lightgrey;
+  }
+  .hide_issues.hide {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    /* align-items: center; */
+    background: lightgrey;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 3s;
+    
   }
 
 </style>

@@ -113,7 +113,7 @@
           svg.select("#bar").select("rect").style("opacity", 0.0)
           return
         };
-        console.log(svg.select("#PS"))
+        
         
 
         // svg.select("#PR")
@@ -239,7 +239,7 @@
 
 
       }
-      console.log(all_flag, label_flag, spam_flag, range_flag)
+     
       
       update_data();
     }
@@ -271,7 +271,7 @@
         .value(function(d) { return d[word]; })   // I need to give the vector of value
         .domain(x.domain())  // then the domain of the graphic
         .thresholds(x.ticks(ticks));
-      console.log(histogram(data), histogram(data)[0])
+     
 
       //Get bin height to give scatter a sense of histogram binning
       const bins = histogram(data)
@@ -279,8 +279,7 @@
           d["bin_height"] = bins[round(d[word]/(1/ticks), 0)].length
           return d
       })
-      console.log(data[0]["bin_height"], data[0][word])
-      console.log(svg)
+    
       const jitterWidth = 1.5
       svg
           .selectAll("circle")
@@ -327,7 +326,7 @@
             });
         },
         function(exit) {
-          console.log(exit)
+          
           return exit.transition()
             .duration(800)
             .attr("opacity", 0.0)
@@ -387,7 +386,7 @@
     $: word, update_data();
     $: x_bar, adjust_highlight();
     $: index, adjust_highlight();
-    $: index, console.log(index)
+   
     
     
   </script>

@@ -32,10 +32,10 @@
             update_data()
           };
 
-          console.log(width, height)
+         
           allData = await d3.csv(csv_path);
           n = allData.length
-          console.log("hello")
+         
           update_data()
     })
   

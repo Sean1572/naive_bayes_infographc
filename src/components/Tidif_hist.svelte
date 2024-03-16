@@ -220,9 +220,6 @@
   $: x_bar, update_data()
   $: word, update_data();
   $: no_prob, update_data();
-
-  $: x_bar, console.log(word)
-  $: word, console.log(word)
   
 </script>
 

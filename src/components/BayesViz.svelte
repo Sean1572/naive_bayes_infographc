@@ -12,7 +12,7 @@
   
 
  $: currentFormula, () => {
-  console.log("Updating formula: ", currentFormula);
+  //console.log("Updating formula: ", currentFormula);
   if (window.MathJax) {
     MathJax.typesetPromise().catch(err => console.error('MathJax rendering error:', err));
   }
