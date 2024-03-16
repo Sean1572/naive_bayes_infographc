@@ -6,11 +6,8 @@
   import { min } from "d3";
   import { onMount } from 'svelte';
   import BayesViz from './BayesViz.svelte';
-  import BayesGauss from './BayesGauss.svelte'
-  import GuassVis from "./GuassVis.svelte";
-
+  import NaiveBayes from "./NaiveBayes.svelte"
   import Point_Cloud_Demo from "./Point_Cloud_Demo.svelte";
-
   import MultiplyViz from "./multiplyViz.svelte";
 
 
@@ -429,7 +426,7 @@
         <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
         <MultiplyViz/>
 
-        <p> as you can see knowing A occured doesn't mean B occurs and vice versa because A and B are indepdent. This means we can simply mutliply thier probablities</p>
+        <p> As you can see knowing A occured doesn't mean B occurs and vice versa because A and B are indepdent. This means we can simply mutliply thier probablities</p>
       </div>
 
       
@@ -453,26 +450,21 @@
     
     <section>
       
-      <h2 class="headerText">THIS IS THE DEFINTION OF NAVIE BAYES!!!!</h2>
-
+      <h2 class="headerText">THIS IS THE DEFINTION OF NAIVE BAYES!!!!</h2>
+    <p class = 'basicText'>
       We have already shown that for any given range of TF-IDF values for a given word we can find $P(R_i|S)$ and $P(R_i|S)$ simply by looking at the data!
 
 
       With these tools together we can take a list of words and the TF-IDF ranges for each word in a given example and get the probablity that word is spam!
 
       So lets implement naive bayes!
+    </p>
+      <div class="foreground">
+        <NaiveBayes/>
+        <p class='basicText'> After calculations, Naive Bayes simply predicts the class with a higher probability!</p>
+      </div>
     </section>
-
-
-    <section>
-    <h1 class='headerText'>Variants</h1>
-    <div class="foreground">
-      <BayesGauss/>
-      <GuassVis/>
-    </div>
-    </section>
-
-    <section/>
+    
     <section>
       <h1 class='headerText'>
       Refrences
