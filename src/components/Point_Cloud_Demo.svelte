@@ -294,7 +294,7 @@
             .attr("cy", function(d){
               let random_move =  (Math.random() * 2 - 1)
               let offset = y.bandwidth()/2
-              let init = y(d.label) + offset - (random_move*d.bin_height)
+              let init = y(d.label) + offset - (random_move*d.bin_height/2)
               return init  + 40
             })
             .attr("r", 5)

@@ -222,6 +222,7 @@
   $: no_prob, update_data();
 
   $: x_bar, console.log(word)
+  $: word, console.log(word)
   
 </script>
 

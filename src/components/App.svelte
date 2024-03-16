@@ -100,13 +100,13 @@
         "pop up": 0,
         "rest of foreground": 1
       }
-    if ((index <= 22) & (index > 12)) {
+    if ((index <= 21) & (index > 12)) {
       interactions["tf-idf histogram"] = 100
     } else {
       interactions["tf-idf histogram"] = 0
     }
 
-    if ((index <= 32) & (index > 22)) {
+    if ((index <= 32) & (index > 21)) {
       interactions["tf-idf point cloud"] = 100
     } else {
       interactions["tf-idf point cloud"] = 0
