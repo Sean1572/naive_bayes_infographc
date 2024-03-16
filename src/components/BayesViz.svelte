@@ -2,6 +2,7 @@
   import { onMount, afterUpdate } from 'svelte';
   import * as d3 from 'd3';
 
+  import {reloadLatex} from "./reloadLatex.js";
   let selectedProbabilityType = 'none';
   let selectedColumn = 'none';
   let selectedX = null; 
@@ -67,18 +68,18 @@
   }
 
   onMount(() => {
-  if (typeof window.MathJax === 'undefined') {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-    script.async = true;
-    document.head.appendChild(script);
+  // if (typeof window.MathJax === 'undefined') {
+    // const script = document.createElement('script');
+    // script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+    // script.async = true;
+    // document.head.appendChild(script);
 
-    script.onload = () => {
-      MathJax.typesetPromise();
-    };
-  } else {
-    MathJax.typesetPromise();
-  }
+  //   script.onload = () => {
+  //     MathJax.typesetPromise();
+  //   };
+  // } else {
+  //   MathJax.typesetPromise();
+  // }
   
   renderTable();
 });
@@ -203,7 +204,7 @@ function calculatePXGivenY() {
 
     calculatedValue = probabilityPXGivenY; 
     currentFormula = `P(${selectedX} \\, | \\, ${selectedY}) = \\frac{P(${selectedX} \\, \\text{and} \\, ${selectedY})}{${generateSumFormulaForPXGivenY(selectedY)}}`;
-
+    reloadLatex()
 }
 
 function generateSumFormulaForPXGivenY(selectedY) {
@@ -212,7 +213,7 @@ function generateSumFormulaForPXGivenY(selectedY) {
 }
 
 
-  function calculatePYGivenX() {
+function calculatePYGivenX() {
   selectedProbabilityType = 'conditionalPYGivenX';
   const yColumn = selectedY; 
 
@@ -232,6 +233,7 @@ function generateSumFormulaForPXGivenY(selectedY) {
 
   calculatedValue = probabilityPYGivenX;
   currentFormula = `P(Y | X) = \frac{P(Y \text{ and } X)}{P(\text{Spam} \text{ and } X) + P(\text{Ham} \text{ and } X)}`;
+  reloadLatex()
 }
 
 
@@ -319,8 +321,10 @@ function generateSumFormulaForPXGivenY(selectedY) {
   </div>
 {/if}
 
+
 <div id="formula">
-  <p>Formula: {@html currentFormula}</p>
+
+  <p>Formula: {"$" + currentFormula + "$"}</p>
   <p>Selected Probability: {selectedProbabilityType.charAt(0).toUpperCase() + selectedProbabilityType.slice(1)}</p>
   <p>Calculated Value: {calculatedValue * 100}%</p>
 </div>

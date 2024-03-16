@@ -12,6 +12,7 @@
   import Point_Cloud_Demo from "./Point_Cloud_Demo.svelte";
 
   import MultiplyViz from "./multiplyViz.svelte";
+  import ReloadLatex from "./ReloadLatex.svelte";
 
 
  
@@ -338,12 +339,24 @@
       <!-- {/if} -->
   
     
+
+
+
+    <p> {@html "$P(R|S)P(S)/P(R)$"}</p>
+    <p> "$P(R|S)P(S)/P(R)$"</p>
     <div class="Foreground Sections!", style="z-index: {interactions["rest of foreground"]};">
     <section>
       <h1 class='headerText'>We get a lot of emails</h1>
 
       <p style="font-weight: 100;">scroll to read</p>
     </section>
+    {#if (index > 0)}
+    
+    <p> {@html "$P(R|S)P(S)/P(R)$"}</p>
+    <p> "$P(R|S)P(S)/P(R)$"</p>
+    <ReloadLatex/>
+    {/if}
+    
     <section />
     <section />
     <section>
