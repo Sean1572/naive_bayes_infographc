@@ -413,8 +413,8 @@
       <img src="indepedence.gif">
 
       <p class='basicText'> The idea here is by assuming independence without probablities, then given some information, the probability remains unchanged. </p>  
-      <p class='basicText'> So with independence, {`$P(\text{A | B}) = P(A)$`} </p>  
-      <p class='basicText'> So with independence, {`$P(\text{A | B}) = P(A)$`} </p>  
+      <p class='basicText'> So with independence, {`$P(\\text{A | B}) = P(A)$`} </p>  
+      <p class='basicText'> So with independence, {`$P(\\text{A | B}) = P(A)$`} </p>  
       
       <p class='basicText'>It also means that the probablities of P(A and B) are equal to P(A)P(B)</p>
       <p class='basicText'>Take a look below for why! </p>
@@ -448,7 +448,9 @@
     </section>    
     
     <section style='background-color: rgba(0, 0, 0, 0.2)'>
-      
+      <br/>
+      <br/>
+      <br/>
       <h2 class="headerText">THIS IS THE DEFINITION OF NAIVE BAYES!!!!</h2>
     <p class = 'basicText'>
       We have already shown that for any given range of TF-IDF values for a given word we can find $P(R_i|S)$ and $P(R_i|S)$ simply by looking at the data!
@@ -480,7 +482,7 @@
       </p><p class="basicText">
        Without needing any complicated Machine learning techinques, just simply binning the data together in histograms, 
        you can determine the emphical probablities of spam emails given a range of TF-IDF values. You have seen from our point cloud visualizations how we can determine the probablities for 
-       $P(S), P(R), {`P(\text{S and R})`}$ and $P(R|S)$ by highlighting how we slowly reduce our event space given what we are trying to find the probablitiy off.
+       $P(S), P(R), {`P(\\text{S and R})`}$ and $P(R|S)$ by highlighting how we slowly reduce our event space given what we are trying to find the probablitiy off.
       </p><p class="basicText">
       You can also understand with our indepdence animations, showing how probabltiies and finding the intersections of events are impacted by how dependent two events are to each other, why we are able to freely mutliply our probabltiies by assuming indepdence allowing navie bayes to really shine by considering the TF-IDF values of many words!
     </p><p class="basicText">
