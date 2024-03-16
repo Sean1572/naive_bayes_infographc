@@ -405,7 +405,7 @@
   <section />
 
     
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section >
       <h1 class='headerText'>Bayes Rule</h1>
       <p class='basicText'> We have shown that $P(S|R) = P(S \cup R)/P(R)$ and $P(R|S) = P(S \cup R)/P(S)$. </p>
       <p class='basicText'> Notice they both have $P(S \cup R)$ in the equation! </p>
