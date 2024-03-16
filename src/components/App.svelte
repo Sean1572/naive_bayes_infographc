@@ -106,7 +106,7 @@
       interactions["tf-idf histogram"] = 0
     }
 
-    if ((index <= 32) & (index > 21)) {
+    if ((index <= 31) & (index > 21)) {
       interactions["tf-idf point cloud"] = 100
     } else {
       interactions["tf-idf point cloud"] = 0
@@ -465,6 +465,8 @@
       </div>
     </section>
     
+
+    <section/>
     <section>
       <h1 class='headerText'>
       Refrences
@@ -627,6 +629,12 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  }
+
+  img {
+    position: absolute;
+    left: 0;
+    width: 100%;
   }
 
 </style>
