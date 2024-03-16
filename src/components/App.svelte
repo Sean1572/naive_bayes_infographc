@@ -181,7 +181,7 @@
     bind:clientWidth={width}
     bind:clientHeight={height}
   >
-    <div class="progress-bars">
+    <!-- <div class="progress-bars">
       <p>TODO REMOVE</p>
       <p>current section: <strong>{index + 1}/{count}</strong></p>
       <progress value={count ? (index + 1) / count : 0} />
@@ -191,7 +191,7 @@
 
       <p>total progress</p>
       <progress value={progress || 0} />
-    </div>
+    </div> -->
 
 
     <div class="content">
@@ -423,12 +423,12 @@
           To do this, we have to understand an idea called independence and how it affects our probablities. 
       </p>     
     </section>
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section>
         <h1 class='headerText'> Aside Independence </h1>
       <img src="no_indepedence.gif">
       </section>
 
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section>
       
       <img src="indepedence.gif">
 
@@ -440,7 +440,7 @@
       <p class='basicText'>Take a look below for why! </p>
     </section>
 
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section>
       <div class='foreground'>
         <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
         <MultiplyViz/>
@@ -467,7 +467,7 @@
     </p>
     </section>    
     
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section>
       <br/>
       <br/>
       <br/>
@@ -515,7 +515,7 @@
       So desipite these complicated problems like email spam detection, as you seen at the end of the day its just probality and fundmental mathematics. Nothing more, nothing less.  
       </p>
     </section>
-    <section style='background-color: rgba(0, 0, 0, 0.2)'>
+    <section>
       <h1 class='headerText'>
       References
       </h1>
@@ -531,7 +531,7 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    outline: green solid 3px;
+    /* outline: green solid 3px; */
   }
 
   .foreground {
@@ -539,21 +539,21 @@
     margin: 0 auto;
     height: auto;
     position: relative;
-    outline: red solid 3px;
+    /* outline: red solid 3px; */
   }
 
   .progress-bars {
     position: absolute;
     right: 0;
-    background: rgba(170, 51, 120, 0.2) /*  40% opaque */;
+    /* background: rgba(170, 51, 120, 0.2)   40% opaque ; */
     visibility: visible;
   }
 
   section {
     height: 80vh;
-    background-color: rgba(0, 0, 0, 0.2); /* 20% opaque */
+    /* background-color: rgba(0, 0, 0, 0.2); 20% opaque */
     /* color: white; */
-    outline: magenta solid 3px;
+    /* outline: magenta solid 3px; */
     text-align: center;
     min-width: 750px;  /* adjust at will */
     color: black;
