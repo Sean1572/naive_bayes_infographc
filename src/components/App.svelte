@@ -400,7 +400,10 @@
           This is known as bayes theroem, it means we can compute $P(S|R)$ by instead sloving for $P(R|S)P(S)/P(R)$. 
           
           And the best part is this allows us to consider the probablity of spam given the TF-IDF ranges of mutliple words!
+
+          IE we can slove $P(S|R_1, R_2, .... R_n)$ for n ranges of n diffrent words
       
+          To do this, we have to understand an idea called indepdence and how it affects our probablities. 
       </p>     
     </section>
       <section>
@@ -412,19 +415,55 @@
       
       
       <img src="indepedence.gif">
-      <p class='basicText'>If the TF-IDF values are not indepdenent it implies that the probablitys of the TF-IDF of urgent are influnced by the word free</p>
-      <p class='basicText', style="font-weight: bold;">Naive Bayes Assumes (Naively) Indepdence!</p>
-      <p>TODO ADD VISUALIZATION FOR THIS SPEFIFIC BIT Therefore P(words | class) = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
-      <p>Notation $PIP(word i | class)$ = P(word 1 | class)P(word 2 | class)P(word 3 | class) ...</p>
+
+      <p> The idea here is by assuming indepdence without probablities, then given some information, the probablity remains unchanged </p>  
+      <p> So with indepdence, {`$P(\text{A | B}) = P(A)$`} </p>  
+      <p> So with indepdence, {`$P(\text{A | B}) = P(A)$`} </p>  
+      
+      <p>It also means that the probablities of P(A and B) are equal to P(A)P(B)</p>
+      <p>Take a look below for why! </p>
     </section>
 
     <section>
       <div class='foreground'>
         <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
         <MultiplyViz/>
+
+        <p> as you can see knowing A occured doesn't mean B occurs and vice versa because A and B are indepdent. This means we can simply mutliply thier probablities</p>
       </div>
+
+      
+      So given this information, lets naviely assume that the TF-IDF values of each word are indepdenent (This is the naive bit of naive bayes)
+
+      Now for math!
+
+      Suppose we want to slove $P(S|R_1, R_2, .... R_n)$. Recall that $P(S|R) = P(R|S)P(S)/P(R)$. Therefore
+
+      $$P(S|R_1, R_2, .... R_n) = P(R_1, R_2, .... R_n|S)P(S)/P(R_1, R_2, .... R_n)$$
+
+      Break this down a bit more, since we assume indepdence with respect to each range then $P(R_1, R_2, .... R_n) = P(R_1)P(R_2)...P(R_n)$
+
+      Furthermore with indepdence we also are able to say $P(R_1, R_2, .... R_n|S) = P(R_1|S)P(R_2|S)...P(R_n|S)$
+
+      All together we have  
+      
+      {@html `$$P(S|R_1, R_2, .... R_n) = \\frac{P(R_1|S)P(R_2|S)...P(R_n|S)P(S)}{P(R_1)P(R_2)...P(R_n)}$$`}
+
     </section>    
     
+    <section>
+      
+      <h2 class="headerText">THIS IS THE DEFINTION OF NAVIE BAYES!!!!</h2>
+
+      We have already shown that for any given range of TF-IDF values for a given word we can find $P(R_i|S)$ and $P(R_i|S)$ simply by looking at the data!
+
+
+      With these tools together we can take a list of words and the TF-IDF ranges for each word in a given example and get the probablity that word is spam!
+
+      So lets implement naive bayes!
+    </section>
+
+
     <section>
     <h1 class='headerText'>Variants</h1>
     <div class="foreground">
