@@ -22,6 +22,8 @@
   let uncommon_vis = false;
   let common_vis = false;
   let its_go_time = false
+  let showBayesViz = false;
+
 
   onMount( async () => { 
  
@@ -270,6 +272,16 @@
             {/if}
             
             <div class="point_cloud">
+
+              <button on:click="{() => showBayesViz = true}">Show BayesViz</button>
+              {#if showBayesViz}
+              <div class="bayesVizPopup">
+                <BayesViz />
+                <button on:click="{() => showBayesViz = false}">Close</button>
+              </div>
+              {/if}
+
+
               <Point_Cloud_Demo
                 bind:word={word}
                 bind:index={index} 
@@ -373,13 +385,7 @@
         <MultiplyViz/>
       </div>
     </section>    
-
-    <section>
-      <h1 class='headerText'>Formula Revisted</h1>
-      <div class="foreground">
-      <BayesViz/>
-      </div>
-    </section>
+    
     <section>
     <h1 class='headerText'>Variants</h1>
     <div class="foreground">
@@ -539,5 +545,19 @@
     line-height: 1.6;
     font-size: 17px;
   }
+
+  .bayesVizPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  }
+
 </style>
 
