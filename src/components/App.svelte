@@ -185,17 +185,17 @@
       <div style="opacity: {email_example_opacity}">
       {#if (index > 5) && (index < 8)}
             <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
-              Some messages contain words unique to a few number of messages
+              Some messages contain words unique to a few number of messages.
             </h2>
           {/if}
           {#if (index >= 8) && (index < 10)}
             <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
-              Some of the words are commonly found in all messages
+              Some of the words are commonly found in all messages.
             </h2>
           {/if}
           {#if (index >= 10) && (index < 12)}
             <h2  class="email_examples_headers" style="position: absolute; top: 10%;">
-              TIDIF can measure how "unique" a word in a given message is compared to an entire document
+              TIDIF can measure how "unique" a word in a given message is compared to an entire document.
             </h2>
           {/if}
 
@@ -207,28 +207,28 @@
 
           {#if (index >= 14) && (index < 15)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
-              The TIDIF values of words depends on if that word is in a spam email or not
+              The TIDIF values of words depends on if that word is in a spam email or not.
             </h2>
           {/if}
           {#if (index >= 15) && (index < 16)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
-              Note the probablity of Spam Emails change as we create a threshold at some TF-IDF Value (drag line to change)
+              Note the probability of Spam Emails change as we create a threshold at some TF-IDF Value. (drag line to change)
             </h2>
           {/if}
           {#if (index >= 16) && (index < 17)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
-              Given we know the TF-IDF of a word in an email, the probablity of the email being spam changes
+              Given we know the TF-IDF of a word in an email, the probability of the email being spam changes.
             </h2>
           {/if}
           {#if (index >= 17) && (index < 18)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
-              This is the idea of conditional probablity, 
-              based on some knowledge you have such as the tidif of a word like "{word}", then the probablity of spam changes
+              This is the idea of conditional probability, 
+              based on some knowledge you have such as the tidif of a word like "{word}", then the probability of spam changes.
             </h2>
           {/if}
           {#if (index >= 18) && (index < 19)}
             <h2  class="email_examples_headers" style="position: absolute; top: 2%;">
-              We denote this P(spam | {word}) or P(ham | {word})
+              We denote this as: P(spam | {word}) or P(ham | {word})
             </h2>
           {/if}
 
@@ -294,22 +294,22 @@
           style="opacity: {point_opacity}; z-index: {interactions["tf-idf point cloud"]};"
         > 
             {#if (index <= 24) & (index > 22)}
-            <h2> This visualization shows the same TF-IDF data but instead each email is plotted on this table</h2>
+            <h2> This visualization shows the same TF-IDF data but instead each email is plotted on this table.</h2>
             {/if}
             {#if (index <= 25) & (index > 24)}
-            <h2> Frist we can compuate the probablity of any email being spam as the number of spam emails devided by total emails</h2>
+            <h2> First we can compute the probability of any email being spam as the number of spam emails divided by total emails.</h2>
             {/if}
             {#if (index <= 26) & (index > 25)}
-            <h2> We can also compute the probablity of if a given word in an email has a TF-IDF value in a given range (Move the red bar around to change the probablity!)</h2>
+            <h2> We can also compute the probability of if a given word in an email has a TF-IDF value in a given range. (Move the red bar around to change the probability!)</h2>
             {/if}
             {#if (index <= 27) & (index > 26)}
-            <h2> Finally we can see what probablity of emails is both spam and in range (try moving the bar to where there are a lot of spam emails)</h2>
+            <h2> Finally, we can see what probability of emails is both spam and in range. (try moving the bar to where there are a lot of spam emails)</h2>
             {/if}
             {#if (index <= 30) & (index > 28)}
-            <h2> We can also compute conditional probablity for spam emails given some TF-IDF range</h2>
+            <h2> We can also compute conditional probability for spam emails given some TF-IDF range.</h2>
             {/if}
             {#if (index <= 32) & (index > 30)}
-            <h2> We can also do the reverse: Given the email is spam, what is the probablity it is in the red range?</h2>
+            <h2> We can also do the reverse: Given the email is spam, what is the probability it is in the red range?</h2>
             {/if}
             
             <div class="point_cloud">
@@ -365,11 +365,11 @@
     <section />
     <section />
     <section />
-    <h1 class='headerText'>Given the TIDIF of a word, we can potentially get a good esimate of the probablity its spam</h1>
+    <h1 class='headerText'>Given the TIDIF of a word, we can potentially get a good esimate of the probability its spam</h1>
     <section />
     <h1 class='headerText'>But what if we want to use mutliple words to find spam?</h1>
     <section />
-    <h1 class='headerText'>Lets dive a bit deerper into how we compute probabablies</h1>
+    <h1 class='headerText'>Lets dive a bit deeper into how we compute probabilities!</h1>
   
   <section />
   <section />
@@ -387,38 +387,37 @@
     
     <section>
       <h1 class='headerText'>Bayes Rule</h1>
-      <p class='basicText'> We have shown that $P(S|R) = P(S \cup R)/P(R)$ and $P(R|S) = P(S \cup R)/P(S)$ </p>
+      <p class='basicText'> We have shown that $P(S|R) = P(S \cup R)/P(R)$ and $P(R|S) = P(S \cup R)/P(S)$. </p>
       <p class='basicText'> Notice they both have $P(S \cup R)$ in the equation! </p>
       <p class='basicText'> We can therefore rewrite it to make them equal each other! </p>
       <p class='basicText'>
          $$P(R|S) = P(S \cup R)/P(S) \rightarrow P(R|S)P(S)= P(S \cup R)$$ 
          $$P(S|R) = P(S \cup R)/P(R) \rightarrow P(S|R) = P(R|S)P(S)/P(R)$$
 
-          This is known as bayes theroem, it means we can compute $P(S|R)$ by instead sloving for $P(R|S)P(S)/P(R)$. 
+          This is known as Bayes Theorem. It means we can compute $P(S|R)$ by instead solving for $P(R|S)P(S)/P(R)$. 
           
-          And the best part is this allows us to consider the probablity of spam given the TF-IDF ranges of mutliple words!
+          And the best part is this allows us to consider the probability of spam given the TF-IDF ranges of mutliple words!
 
-          IE we can slove $P(S|R_1, R_2, .... R_n)$ for n ranges of n diffrent words
+          I.E. we can solve $P(S|R_1, R_2, .... R_n)$ for n ranges of n diffrent words.
       
-          To do this, we have to understand an idea called indepdence and how it affects our probablities. 
+          To do this, we have to understand an idea called independence and how it affects our probablities. 
       </p>     
     </section>
       <section>
-        <h1 class='headerText'> Aside Indepdence </h1>
+        <h1 class='headerText'> Aside Independence </h1>
       <img src="no_indepedence.gif">
       </section>
-   
-      <section>
-      
+
+    <section>
       
       <img src="indepedence.gif">
 
-      <p> The idea here is by assuming indepdence without probablities, then given some information, the probablity remains unchanged </p>  
-      <p> So with indepdence, {`$P(\text{A | B}) = P(A)$`} </p>  
-      <p> So with indepdence, {`$P(\text{A | B}) = P(A)$`} </p>  
+      <p class='basicText'> The idea here is by assuming independence without probablities, then given some information, the probability remains unchanged. </p>  
+      <p class='basicText'> So with independence, {`$P(\text{A | B}) = P(A)$`} </p>  
+      <p class='basicText'> So with independence, {`$P(\text{A | B}) = P(A)$`} </p>  
       
-      <p>It also means that the probablities of P(A and B) are equal to P(A)P(B)</p>
-      <p>Take a look below for why! </p>
+      <p class='basicText'>It also means that the probablities of P(A and B) are equal to P(A)P(B)</p>
+      <p class='basicText'>Take a look below for why! </p>
     </section>
 
     <section>
@@ -426,38 +425,38 @@
         <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
         <MultiplyViz/>
 
-        <p> As you can see knowing A occured doesn't mean B occurs and vice versa because A and B are indepdent. This means we can simply mutliply thier probablities</p>
+        <p class='basicText'> As you can see, knowing A occured doesn't mean B occurs and vice versa because A and B are independent. This means we can simply multiply their probablities.</p>
       </div>
 
-      
-      So given this information, lets naviely assume that the TF-IDF values of each word are indepdenent (This is the naive bit of naive bayes)
+      <p>
+      So given this information, let's naively assume that the TF-IDF values of each word are independenent (This is the naive bit of Naive Bayes).
 
       Now for math!
 
-      Suppose we want to slove $P(S|R_1, R_2, .... R_n)$. Recall that $P(S|R) = P(R|S)P(S)/P(R)$. Therefore
+      Suppose we want to solve $P(S|R_1, R_2, .... R_n)$. Recall that $P(S|R) = P(R|S)P(S)/P(R)$. Therefore:
 
-      $$P(S|R_1, R_2, .... R_n) = P(R_1, R_2, .... R_n|S)P(S)/P(R_1, R_2, .... R_n)$$
+      $$P(S|R_1, R_2, .... R_n) = P(R_1, R_2, .... R_n|S)P(S)/P(R_1, R_2, .... R_n)$$.
 
-      Break this down a bit more, since we assume indepdence with respect to each range then $P(R_1, R_2, .... R_n) = P(R_1)P(R_2)...P(R_n)$
+      Let's break this down a bit more. Since we assume independence with respect to each range, then $P(R_1, R_2, .... R_n) = P(R_1)P(R_2)...P(R_n)$.
 
-      Furthermore with indepdence we also are able to say $P(R_1, R_2, .... R_n|S) = P(R_1|S)P(R_2|S)...P(R_n|S)$
+      Furthermore with independence we are also able to say $P(R_1, R_2, .... R_n|S) = P(R_1|S)P(R_2|S)...P(R_n|S)$.
 
       All together we have  
       
       {@html `$$P(S|R_1, R_2, .... R_n) = \\frac{P(R_1|S)P(R_2|S)...P(R_n|S)P(S)}{P(R_1)P(R_2)...P(R_n)}$$`}
-
+    </p>
     </section>    
     
     <section>
       
-      <h2 class="headerText">THIS IS THE DEFINTION OF NAIVE BAYES!!!!</h2>
+      <h2 class="headerText">THIS IS THE DEFINITION OF NAIVE BAYES!!!!</h2>
     <p class = 'basicText'>
       We have already shown that for any given range of TF-IDF values for a given word we can find $P(R_i|S)$ and $P(R_i|S)$ simply by looking at the data!
 
 
-      With these tools together we can take a list of words and the TF-IDF ranges for each word in a given example and get the probablity that word is spam!
+      With these tools together we can take a list of words and the TF-IDF ranges for each word in a given example and get the probability that word is spam!
 
-      So lets implement naive bayes!
+      So lets implement Naive Bayes!
     </p>
       <div class="foreground">
         <NaiveBayes/>
@@ -469,7 +468,7 @@
     <section/>
     <section>
       <h1 class='headerText'>
-      Refrences
+      References
       </h1>
     </section>
   </div>
@@ -632,7 +631,7 @@
   }
 
   img {
-    position: absolute;
+    position: relative;
     left: 0;
     width: 100%;
   }

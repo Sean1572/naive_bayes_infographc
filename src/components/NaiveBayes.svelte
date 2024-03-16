@@ -223,7 +223,7 @@ function round(x, position) {
     <div>
       <label for={`word-select-${index}-range`}>range for Word {index + 1}:</label>
       <select id={`word-select-${index}-range`} on:change={event => handleRangeChange(event, index)}>
-        <option value={-1}>no range</option>
+        <option value={-1}>...</option>
         {#each ranges as range }
           <option value={range}>{round(range * 0.1, 1)} - {round((range + 1) * 0.1, 1)}</option>
         {/each}
