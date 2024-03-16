@@ -466,6 +466,33 @@
     
 
     <section/>
+    <section>
+      <h1 class='headerText'>
+      Conclusion and Takeaways
+      </h1>
+
+      <p class="basicText">
+       Spam classification was one of the frist applications of navie bayes. Hopefully now you can see why. 
+
+      </p><p class="basicText">
+       Frist we talked about how useful probablties can be to threshold our TF-IDF values for spam and ham emails and be able to filter out emails if we know what the TF-IDF value of a given word can be.
+       This was done by allowing you to see the probablities on the left and right side of the red threshold bar for ham and spam helping motivating using probablitiy to slove the problem.
+      </p><p class="basicText">
+       Without needing any complicated Machine learning techinques, just simply binning the data together in histograms, 
+       you can determine the emphical probablities of spam emails given a range of TF-IDF values. You have seen from our point cloud visualizations how we can determine the probablities for 
+       $P(S), P(R), {`P(\text{S and R})`}$ and $P(R|S)$ by highlighting how we slowly reduce our event space given what we are trying to find the probablitiy off.
+      </p><p class="basicText">
+      You can also understand with our indepdence animations, showing how probabltiies and finding the intersections of events are impacted by how dependent two events are to each other, why we are able to freely mutliply our probabltiies by assuming indepdence allowing navie bayes to really shine by considering the TF-IDF values of many words!
+    </p><p class="basicText">
+      Then once you had the foundations, we introduced navie bayes working in practice giving you a chance to experiment and see how changing how "common" a word is in a given document can change the odds the email is spam or not.
+      This could help show how these spam dectors work in practice!
+    </p><p class="basicText">
+      All this is to show that binary classification, the act of identifying if something falls into one of two categories, is really a matter of getting the probablity that input falls into a given class. 
+      This example is nice because it shows how useful the fundmental ideas of probablity are to machine learning, a felid frequently dominated by complicated machine learning algorithms, fancy marketing, and hype.TidifHist
+    </p><p class="basicText">
+      So desipite these complicated problems like email spam detection, as you seen at the end of the day its just probality and fundmental mathematics. Nothing more, nothing less.  
+      </p>
+    </section>
     <section style='background-color: rgba(0, 0, 0, 0.2)'>
       <h1 class='headerText'>
       References
