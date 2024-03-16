@@ -221,7 +221,7 @@
   $: word, update_data();
   $: no_prob, update_data();
 
-  
+  $: x_bar, console.log(word)
   
 </script>
 
@@ -232,20 +232,22 @@
       {height}
       viewBox="0 0 {width} {height}"
       style="">
-          <!-- x-axis -->
-          <g bind:this={gx} transform="translate({marginLeft},{height - marginBottom})" />
-          <!-- y-axis -->
-          <g bind:this={gy} transform="translate({marginLeft},{marginTop})">
-            <text
-              x="5"
-              y={marginTop}
-              dy="0.32em"
+
+          <text
+              x={marginLeft + 10}
+              y={marginTop + 10}
+              
               fill="#000"
               font-weight="bold"
               text-anchor="start"
             >
               {word}
             </text>
+          <!-- x-axis -->
+          <g bind:this={gx} transform="translate({marginLeft},{height - marginBottom})" />
+          <!-- y-axis -->
+          <g bind:this={gy} transform="translate({marginLeft},{marginTop})">
+            
           </g>
 
           <g id="spam"></g>
