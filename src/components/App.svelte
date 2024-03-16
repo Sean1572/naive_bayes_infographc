@@ -385,7 +385,7 @@
   <section />
 
     
-    <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
       <h1 class='headerText'>Bayes Rule</h1>
       <p class='basicText'> We have shown that $P(S|R) = P(S \cup R)/P(R)$ and $P(R|S) = P(S \cup R)/P(S)$. </p>
       <p class='basicText'> Notice they both have $P(S \cup R)$ in the equation! </p>
@@ -403,12 +403,12 @@
           To do this, we have to understand an idea called independence and how it affects our probablities. 
       </p>     
     </section>
-      <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
         <h1 class='headerText'> Aside Independence </h1>
       <img src="no_indepedence.gif">
       </section>
 
-    <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
       
       <img src="indepedence.gif">
 
@@ -420,7 +420,7 @@
       <p class='basicText'>Take a look below for why! </p>
     </section>
 
-    <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
       <div class='foreground'>
         <h3 class='smallerheaderText'>P(A and B) = P(A)P(B) </h3>
         <MultiplyViz/>
@@ -447,7 +447,7 @@
     </p>
     </section>    
     
-    <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
       
       <h2 class="headerText">THIS IS THE DEFINITION OF NAIVE BAYES!!!!</h2>
     <p class = 'basicText'>
@@ -466,7 +466,7 @@
     
 
     <section/>
-    <section>
+    <section style='background-color: rgba(0, 0, 0, 0.2)'>
       <h1 class='headerText'>
       References
       </h1>
