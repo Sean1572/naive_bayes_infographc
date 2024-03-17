@@ -514,7 +514,17 @@
     </p><p class="basicText">
       So despite these complicated problems like email spam detection, as you have seen, at the end of the day its just probability and fundamental mathematics. Nothing more, nothing less.  
       </p>
+
+
+      <h2 class="headerText"> Refrences </h2>
+      <p> DSC 140a</p>
+      <p><a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Wikipedia Page<a> </p>
+      <p>Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1eYTnn1gy2kM3kDWSwzwQsmsfhe2bzPJaR1SSIHHPOJs/edit?usp=sharing">here</a></p>
     </section>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </div>
   </div>
 </Scroller>
